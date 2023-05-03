@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		593D7BD02A030F7A009424AE /* MyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BCF2A030F7A009424AE /* MyView.m */; };
 		594AE83B2A00BF1700830026 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83A2A00BF1700830026 /* AppDelegate.m */; };
 		594AE83E2A00BF1700830026 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83D2A00BF1700830026 /* Renderer.m */; };
 		594AE8412A00BF1700830026 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE8402A00BF1700830026 /* GameViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		593D7BCE2A030F7A009424AE /* MyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyView.h; sourceTree = "<group>"; };
+		593D7BCF2A030F7A009424AE /* MyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyView.m; sourceTree = "<group>"; };
 		594AE8362A00BF1700830026 /* RayTracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RayTracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		594AE8392A00BF1700830026 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		594AE83A2A00BF1700830026 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -43,6 +46,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		593D7BC42A017889009424AE /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				594AE83C2A00BF1700830026 /* Renderer.h */,
+				594AE83D2A00BF1700830026 /* Renderer.m */,
+				594AE8422A00BF1700830026 /* Shaders.metal */,
+				594AE8442A00BF1700830026 /* ShaderTypes.h */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		593D7BC52A017892009424AE /* App */ = {
+			isa = PBXGroup;
+			children = (
+				594AE8392A00BF1700830026 /* AppDelegate.h */,
+				594AE83A2A00BF1700830026 /* AppDelegate.m */,
+				594AE83F2A00BF1700830026 /* GameViewController.h */,
+				594AE8402A00BF1700830026 /* GameViewController.m */,
+				593D7BCE2A030F7A009424AE /* MyView.h */,
+				593D7BCF2A030F7A009424AE /* MyView.m */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		593D7BC92A01B58C009424AE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		594AE82D2A00BF1700830026 = {
 			isa = PBXGroup;
 			children = (
@@ -62,14 +96,9 @@
 		594AE8382A00BF1700830026 /* RayTracing */ = {
 			isa = PBXGroup;
 			children = (
-				594AE8392A00BF1700830026 /* AppDelegate.h */,
-				594AE83A2A00BF1700830026 /* AppDelegate.m */,
-				594AE83C2A00BF1700830026 /* Renderer.h */,
-				594AE83D2A00BF1700830026 /* Renderer.m */,
-				594AE83F2A00BF1700830026 /* GameViewController.h */,
-				594AE8402A00BF1700830026 /* GameViewController.m */,
-				594AE8422A00BF1700830026 /* Shaders.metal */,
-				594AE8442A00BF1700830026 /* ShaderTypes.h */,
+				593D7BC92A01B58C009424AE /* Utils */,
+				593D7BC52A017892009424AE /* App */,
+				593D7BC42A017889009424AE /* Renderer */,
 				594AE8452A00BF1800830026 /* Assets.xcassets */,
 				594AE8472A00BF1800830026 /* Main.storyboard */,
 				594AE84A2A00BF1800830026 /* main.m */,
@@ -149,6 +178,7 @@
 			files = (
 				594AE84B2A00BF1800830026 /* main.m in Sources */,
 				594AE8432A00BF1700830026 /* Shaders.metal in Sources */,
+				593D7BD02A030F7A009424AE /* MyView.m in Sources */,
 				594AE83E2A00BF1700830026 /* Renderer.m in Sources */,
 				594AE8412A00BF1700830026 /* GameViewController.m in Sources */,
 				594AE83B2A00BF1700830026 /* AppDelegate.m in Sources */,
@@ -175,7 +205,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -233,7 +263,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;

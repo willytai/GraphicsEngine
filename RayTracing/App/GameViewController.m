@@ -7,10 +7,11 @@
 
 #import "GameViewController.h"
 #import "Renderer.h"
+#import "MyView.h"
 
 @implementation GameViewController
 {
-    MTKView *_view;
+    MyView *_view;
 
     Renderer *_renderer;
 }
@@ -19,7 +20,7 @@
 {
     [super viewDidLoad];
 
-    _view = (MTKView *)self.view;
+    _view = (MyView *)self.view;
 
     _view.device = MTLCreateSystemDefaultDevice();
 
@@ -35,6 +36,25 @@
     [_renderer mtkView:_view drawableSizeWillChange:_view.bounds.size];
 
     _view.delegate = _renderer;
+}
+
+
+/// Event Handling Here
+
+- (void)keyDown:(NSEvent *)event {
+    NSLog(@"%s, %@, %u", __PRETTY_FUNCTION__, event.characters, event.keyCode);
+}
+
+- (void)keyUp:(NSEvent *)event {
+    NSLog(@"%s, %@, %u", __PRETTY_FUNCTION__, event.characters, event.keyCode);
+}
+
+- (void)mouseDown:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)scrollWheel:(NSEvent *)event {
+    NSLog(@"%.4f, %.4f", event.scrollingDeltaY, event.deltaY);
 }
 
 @end

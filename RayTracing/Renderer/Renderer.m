@@ -203,6 +203,7 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 - (void)drawInMTKView:(nonnull MTKView *)view
 {
     /// Per frame updates here
+    // NSLog(@"[mouse location] %f, %f", NSEvent.mouseLocation.x, NSEvent.mouseLocation.y);
 
     dispatch_semaphore_wait(_inFlightSemaphore, DISPATCH_TIME_FOREVER);
 
