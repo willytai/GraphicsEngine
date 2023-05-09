@@ -12,6 +12,9 @@
 
 // Include header shared between C code here, which executes Metal API commands, and .metal files
 #import "ShaderTypes.h"
+#import "Camera.h"
+#import "Timer.hpp"
+#import "Logger.hpp"
 
 static const NSUInteger kMaxBuffersInFlight = 3;
 
@@ -35,14 +38,17 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 
     void* _uniformBufferAddress;
 
-    matrix_float4x4 _projectionMatrix;
-
     float _rotation;
 
     MTKMesh *_mesh;
+
+
+    /// added
+    Timer   _timer;
+    Camera* _camera;
 }
 
--(nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
+- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
 {
     self = [super init];
     if(self)
@@ -51,9 +57,25 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
         _inFlightSemaphore = dispatch_semaphore_create(kMaxBuffersInFlight);
         [self _loadMetalWithView:view];
         [self _loadAssets];
+
+
+        [self _initCamera];
+        _timer.reset();
     }
 
     return self;
+}
+
+#pragma mark Setup and Load
+
+- (void)_initCamera {
+    CameraParams cameraParams;
+    cameraParams.fov = 45.0f; // in degrees
+    cameraParams.width = 1280.0f;
+    cameraParams.height = 720.0f;
+    cameraParams.nearClip = 0.1f;
+    cameraParams.farClip = 1000.0f;
+    _camera = [[Camera alloc] initWithParams:cameraParams];
 }
 
 - (void)_loadMetalWithView:(nonnull MTKView *)view;
@@ -172,6 +194,8 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     }
 }
 
+#pragma mark Per Frame Update
+
 - (void)_updateDynamicBufferState
 {
     /// Update the state of our uniform buffers before rendering
@@ -183,18 +207,20 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     _uniformBufferAddress = ((uint8_t*)_dynamicUniformBuffer.contents) + _uniformBufferOffset;
 }
 
-- (void)_updateGameState
+- (void)_updateGameStateWithDeltaTime:(TimeStep)deltaTime
 {
     /// Update any game state before encoding renderint commands to our drawable
 
+    // NSLog(@"delta time: %.4f", deltaTime.ms());
+    [_camera onUpdateWithDeltaTime:deltaTime];
+
     Uniforms * uniforms = (Uniforms*)_uniformBufferAddress;
 
-    uniforms->projectionMatrix = _projectionMatrix;
+    uniforms->projectionMatrix = _camera.projMat;
 
     vector_float3 rotationAxis = {1, 1, 0};
     matrix_float4x4 modelMatrix = matrix4x4_rotation(_rotation, rotationAxis);
-    matrix_float4x4 viewMatrix = matrix4x4_translation(0.0, 0.0, -8.0);
-
+    matrix_float4x4 viewMatrix = _camera.viewMat;
     uniforms->modelViewMatrix = matrix_multiply(viewMatrix, modelMatrix);
 
     _rotation += .01;
@@ -218,7 +244,7 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 
     [self _updateDynamicBufferState];
 
-    [self _updateGameState];
+    [self _updateGameStateWithDeltaTime:_timer.deltaTime()];
 
     /// Delay getting the currentRenderPassDescriptor until we absolutely need it to avoid
     ///   holding onto the drawable and blocking the display pipeline any longer than necessary
@@ -283,9 +309,7 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size
 {
     /// Respond to drawable size or orientation changes here
-
-    float aspect = size.width / (float)size.height;
-    _projectionMatrix = matrix_perspective_right_hand(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
+    [_camera onResizeWidth:size.width Height:size.height];
 }
 
 #pragma mark Matrix Math Utilities

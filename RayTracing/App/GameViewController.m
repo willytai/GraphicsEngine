@@ -42,15 +42,19 @@
 /// Event Handling Here
 
 - (void)keyDown:(NSEvent *)event {
-    NSLog(@"%s, %@, %u", __PRETTY_FUNCTION__, event.characters, event.keyCode);
+    NSLog(@"%s, %@, %u, %lu", __PRETTY_FUNCTION__, event.characters, event.keyCode, (unsigned long)event.modifierFlags);
+    if (event.modifierFlags & NSEventModifierFlagOption) {
+        NSLog(@"option is pressed");
+    }
+    // NSLog(@"%lu", (unsigned long)NSEvent.pressedMouseButtons);
 }
 
 - (void)keyUp:(NSEvent *)event {
-    NSLog(@"%s, %@, %u", __PRETTY_FUNCTION__, event.characters, event.keyCode);
+    // NSLog(@"%s, %@, %u", __PRETTY_FUNCTION__, event.characters, event.keyCode);
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"%s, %lu", __PRETTY_FUNCTION__, (unsigned long)NSEvent.pressedMouseButtons);
 }
 
 - (void)scrollWheel:(NSEvent *)event {

@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		593D7BD02A030F7A009424AE /* MyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BCF2A030F7A009424AE /* MyView.m */; };
+		593D7BD32A035017009424AE /* Camera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BD22A035017009424AE /* Camera.mm */; };
+		593D7BDD2A0AC592009424AE /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BDB2A0AC592009424AE /* Math.cpp */; };
+		593D7BE02A0ACDDF009424AE /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BDE2A0ACDDF009424AE /* Timer.cpp */; };
+		593D7BE32A0AE9EE009424AE /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BE12A0AE9EE009424AE /* Logger.cpp */; };
 		594AE83B2A00BF1700830026 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83A2A00BF1700830026 /* AppDelegate.m */; };
-		594AE83E2A00BF1700830026 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83D2A00BF1700830026 /* Renderer.m */; };
+		594AE83E2A00BF1700830026 /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83D2A00BF1700830026 /* Renderer.mm */; };
 		594AE8412A00BF1700830026 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE8402A00BF1700830026 /* GameViewController.m */; };
 		594AE8432A00BF1700830026 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 594AE8422A00BF1700830026 /* Shaders.metal */; };
 		594AE8462A00BF1800830026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 594AE8452A00BF1800830026 /* Assets.xcassets */; };
@@ -20,11 +24,19 @@
 /* Begin PBXFileReference section */
 		593D7BCE2A030F7A009424AE /* MyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyView.h; sourceTree = "<group>"; };
 		593D7BCF2A030F7A009424AE /* MyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyView.m; sourceTree = "<group>"; };
+		593D7BD12A035017009424AE /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		593D7BD22A035017009424AE /* Camera.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Camera.mm; sourceTree = "<group>"; };
+		593D7BDB2A0AC592009424AE /* Math.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Math.cpp; sourceTree = "<group>"; };
+		593D7BDC2A0AC592009424AE /* Math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Math.hpp; sourceTree = "<group>"; };
+		593D7BDE2A0ACDDF009424AE /* Timer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
+		593D7BDF2A0ACDDF009424AE /* Timer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
+		593D7BE12A0AE9EE009424AE /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		593D7BE22A0AE9EE009424AE /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Logger.hpp; sourceTree = "<group>"; };
 		594AE8362A00BF1700830026 /* RayTracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RayTracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		594AE8392A00BF1700830026 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		594AE83A2A00BF1700830026 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		594AE83C2A00BF1700830026 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
-		594AE83D2A00BF1700830026 /* Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
+		594AE83D2A00BF1700830026 /* Renderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Renderer.mm; sourceTree = "<group>"; };
 		594AE83F2A00BF1700830026 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		594AE8402A00BF1700830026 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		594AE8422A00BF1700830026 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -50,9 +62,11 @@
 			isa = PBXGroup;
 			children = (
 				594AE83C2A00BF1700830026 /* Renderer.h */,
-				594AE83D2A00BF1700830026 /* Renderer.m */,
+				594AE83D2A00BF1700830026 /* Renderer.mm */,
 				594AE8422A00BF1700830026 /* Shaders.metal */,
 				594AE8442A00BF1700830026 /* ShaderTypes.h */,
+				593D7BD12A035017009424AE /* Camera.h */,
+				593D7BD22A035017009424AE /* Camera.mm */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -73,6 +87,12 @@
 		593D7BC92A01B58C009424AE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				593D7BDB2A0AC592009424AE /* Math.cpp */,
+				593D7BDC2A0AC592009424AE /* Math.hpp */,
+				593D7BDE2A0ACDDF009424AE /* Timer.cpp */,
+				593D7BDF2A0ACDDF009424AE /* Timer.hpp */,
+				593D7BE12A0AE9EE009424AE /* Logger.cpp */,
+				593D7BE22A0AE9EE009424AE /* Logger.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -176,10 +196,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				593D7BD32A035017009424AE /* Camera.mm in Sources */,
+				593D7BE32A0AE9EE009424AE /* Logger.cpp in Sources */,
 				594AE84B2A00BF1800830026 /* main.m in Sources */,
 				594AE8432A00BF1700830026 /* Shaders.metal in Sources */,
+				593D7BDD2A0AC592009424AE /* Math.cpp in Sources */,
 				593D7BD02A030F7A009424AE /* MyView.m in Sources */,
-				594AE83E2A00BF1700830026 /* Renderer.m in Sources */,
+				594AE83E2A00BF1700830026 /* Renderer.mm in Sources */,
+				593D7BE02A0ACDDF009424AE /* Timer.cpp in Sources */,
 				594AE8412A00BF1700830026 /* GameViewController.m in Sources */,
 				594AE83B2A00BF1700830026 /* AppDelegate.m in Sources */,
 			);
@@ -205,7 +229,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -263,7 +287,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -313,6 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CODE_SIGN_ENTITLEMENTS = RayTracing/RayTracing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -339,6 +364,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CODE_SIGN_ENTITLEMENTS = RayTracing/RayTracing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
