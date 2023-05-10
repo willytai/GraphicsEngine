@@ -19,6 +19,8 @@
     ScrollCallback      _scrollCallback;
     MouseDownCallback   _mouseDownCallback;
     MouseUpCallback     _mouseUpCallback;
+    KeyDownCallback     _keyDownCallback;
+    KeyUpCallback       _keyUpCallback;
 }
 
 - (void)viewDidLoad
@@ -72,6 +74,25 @@
             [self->_renderer onMouseUp];
         };
     }
+
+    // key down
+    {
+        typeof(self) __weak weakself = self;
+        _keyDownCallback = ^(unsigned short keyCode, NSUInteger modifierFlags){
+            typeof(weakself) __strong self = weakself;
+            [self->_renderer onKeyDown:keyCode
+                          WithModifier:modifierFlags];
+        };
+    }
+
+    // key up
+    {
+        typeof(self) __weak weakself = self;
+        _keyUpCallback = ^(unsigned short keyCode){
+            typeof(weakself) __strong self = weakself;
+            [self->_renderer onKeyUp:keyCode];
+        };
+    }
 }
 
 
@@ -79,10 +100,11 @@
 
 - (void)keyDown:(NSEvent *)event {
     NSLog(@"%s, %@, %u, %lu", __PRETTY_FUNCTION__, event.characters, event.keyCode, (unsigned long)event.modifierFlags);
-    if (event.modifierFlags & NSEventModifierFlagOption) {
-        NSLog(@"option is pressed");
-    }
-    // NSLog(@"%lu", (unsigned long)NSEvent.pressedMouseButtons);
+    _keyDownCallback(event.keyCode, event.modifierFlags);
+}
+
+- (void)keyUp:(NSEvent *)event {
+    _keyUpCallback(event.keyCode);
 }
 
 - (void)mouseDown:(NSEvent *)event {

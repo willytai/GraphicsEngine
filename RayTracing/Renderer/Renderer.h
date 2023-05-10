@@ -25,5 +25,12 @@
 /// this will be called only when the LEFT mouse button is up
 - (void)onMouseUp;
 
+/// key down event, calls the camera's 'onKeyDown'
+- (void)onKeyDown:(unsigned short)keyCode
+     WithModifier:(NSUInteger)modifierFlags;
+
+/// key up event, calls the camera's 'onKeyUp'
+- (void)onKeyUp:(unsigned short)keyCode;
+
 @end
 

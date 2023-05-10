@@ -8,12 +8,26 @@
 #import "Camera.h"
 #import "Math.hpp"
 #import "Logger.hpp"
+#import "InputCodes.h"
 #import <Cocoa/Cocoa.h>
 
 
+#pragma mark Constants
 /// the cutoff distance to the focal point for zooming
 const float MINDIST = 3.0f;
 const float MAXDIST = 1000.0f;
+
+
+#pragma mark Key Down Flags
+typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
+    A_KEY_FLAG = 1 << 0,
+    D_KEY_FLAG = 1 << 2,
+    S_KEY_FLAG = 1 << 1,
+    W_KEY_FLAG = 1 << 3,
+    Q_KEY_FLAG = 1 << 4,
+    E_KEY_FLAG = 1 << 5,
+    NO_KEYS_DOWN = 0,
+};
 
 
 @implementation Camera
@@ -37,6 +51,10 @@ const float MAXDIST = 1000.0f;
 
     /// the position of the mouse for the previous frame
     simd_float2 _mousePosition;
+
+    /// the keys that are currently held down
+    /// we are only interested in 'w', 'a', 's', 'd'
+    KeyDownFlags _keyDownFlags;
 }
 
 - (nonnull instancetype)initWithParams:(CameraParams)params {
@@ -55,6 +73,7 @@ const float MAXDIST = 1000.0f;
         _updateProjection = NO;
         _updateView = NO;
         _leftMouseDown = NO;
+        _keyDownFlags = NO_KEYS_DOWN;
     }
     return self;
 }
@@ -65,7 +84,11 @@ const float MAXDIST = 1000.0f;
                                                         NSEvent.mouseLocation.y);
         simd_float2 deltaMouse = newMousePosition - _mousePosition;
         _mousePosition = newMousePosition;
-        [self _rotateWithDeltaMouse:deltaMouse];
+        [self _rotateWithDeltaMouse:deltaMouse
+                      WithDeltaTime:deltaTime];
+    }
+    if (_keyDownFlags) {
+        [self _translateWithDeltaTime:deltaTime];
     }
 
     if (_updateProjection) [self _calculateProjectionMatrix];
@@ -103,6 +126,82 @@ const float MAXDIST = 1000.0f;
     _leftMouseDown = NO;
 }
 
+- (void)onKeyDown:(unsigned short)keyCode {
+    switch (keyCode) {
+        case Key::W:
+        {
+            _keyDownFlags |= W_KEY_FLAG;
+            break;
+        }
+        case Key::A:
+        {
+            _keyDownFlags |= A_KEY_FLAG;
+            break;
+        }
+        case Key::S:
+        {
+            _keyDownFlags |= S_KEY_FLAG;
+            break;
+        }
+        case Key::D:
+        {
+            _keyDownFlags |= D_KEY_FLAG;
+            break;
+        }
+        case Key::Q:
+        {
+            _keyDownFlags |= Q_KEY_FLAG;
+            break;
+        }
+        case Key::E:
+        {
+            _keyDownFlags |= E_KEY_FLAG;
+            break;
+        }
+        default:
+            NSLog(@"keycode: %u unrecognized.", keyCode);
+            break;
+    }
+}
+
+- (void)onKeyUp:(unsigned short)keyCode {
+    switch (keyCode) {
+        case Key::W:
+        {
+            _keyDownFlags &= ~W_KEY_FLAG;
+            break;
+        }
+        case Key::A:
+        {
+            _keyDownFlags &= ~A_KEY_FLAG;
+            break;
+        }
+        case Key::S:
+        {
+            _keyDownFlags &= ~S_KEY_FLAG;
+            break;
+        }
+        case Key::D:
+        {
+            _keyDownFlags &= ~D_KEY_FLAG;
+            break;
+        }
+        case Key::Q:
+        {
+            _keyDownFlags &= ~Q_KEY_FLAG;
+            break;
+        }
+        case Key::E:
+        {
+            _keyDownFlags &= ~E_KEY_FLAG;
+            break;
+        }
+        default:
+            NSLog(@"keycode: %u unrecognized.", keyCode);
+            break;
+    }
+}
+
 #pragma mark Private Functions
 
 - (void)_calculateProjectionMatrix {
@@ -127,12 +226,54 @@ const float MAXDIST = 1000.0f;
                      std::pow(_distance, 2) * 0.0005f);
 }
 
-- (void)_rotateWithDeltaMouse:(simd_float2)deltaMouse {
-    _pitch -= deltaMouse.y * 0.001f;
-    _yaw += deltaMouse.x * 0.001f;
+- (void)_rotateWithDeltaMouse:(simd_float2)deltaMouse
+                WithDeltaTime:(TimeStep)deltaTime {
+    static const float speed = 5e-5f;
+    float ms = deltaTime.ms();
+    _pitch -= deltaMouse.y * speed * ms;
+    _yaw += deltaMouse.x * speed * ms;
     simd_quatf orientation = mathutil::quat(_pitch, _yaw, 0.0f);
     simd_float3 forward = mathutil::rotate(orientation, mathutil::float3(0.0f, 0.0f, 1.0f));
     _focalPoint = _position + _distance * forward;
+    _updateView = YES;
+}
+
+- (void)_translateWithDeltaTime:(TimeStep)deltaTime {
+    static const simd_float3 up = mathutil::float3(0.0f, 1.0f, 0.0f);
+    static const simd_float3 down = mathutil::float3(0.0f, -1.0f, 0.0f);
+    static const simd_float3 left = mathutil::float3(-1.0f, 0.0f, 0.0f);
+    static const simd_float3 right = mathutil::float3(1.0f, 0.0f, 0.0f);
+    static const simd_float3 forward = mathutil::float3(0.0f, 0.0f, 1.0f);
+    static const simd_float3 backward = mathutil::float3(0.0f, 0.0f, -1.0f);
+    static const float speed = 1e-2f;
+    float deltaDist = deltaTime.ms() * speed;
+    simd_float3 translation = mathutil::float3(0.0f, 0.0f, 0.0f);
+    if (_keyDownFlags & A_KEY_FLAG) {
+        // left
+        translation += deltaDist * left;
+    }
+    if (_keyDownFlags & D_KEY_FLAG) {
+        // right
+        translation += deltaDist * right;
+    }
+    if (_keyDownFlags & W_KEY_FLAG) {
+        // forward
+        translation += deltaDist * forward;
+    }
+    if (_keyDownFlags & S_KEY_FLAG) {
+        // backward
+        translation += deltaDist * backward;
+    }
+    if (_keyDownFlags & Q_KEY_FLAG) {
+        // up
+        translation += deltaDist * up;
+    }
+    if (_keyDownFlags & E_KEY_FLAG) {
+        // down
+        translation += deltaDist * down;
+    }
+    _position += translation;
+    _focalPoint += translation;
     _updateView = YES;
 }
 

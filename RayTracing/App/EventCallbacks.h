@@ -13,5 +13,7 @@
 typedef void(^ScrollCallback)(float);
 typedef void(^MouseDownCallback)(MouseButton);
 typedef void(^MouseUpCallback)(void);
+typedef void(^KeyDownCallback)(unsigned short, NSUInteger);
+typedef void(^KeyUpCallback)(unsigned short);
 
 #endif /* EventCallbacks_h */

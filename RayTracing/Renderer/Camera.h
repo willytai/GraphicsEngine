@@ -21,6 +21,9 @@ typedef struct CameraParams {
 } CameraParams;
 
 
+/*!
+ @abstract The camera class. Scroll to Zoom in/out. Hold down left mouse and drag to rotate.
+ */
 @interface Camera : NSObject
 
 /// the parameters of the camera
@@ -59,6 +62,12 @@ typedef struct CameraParams {
 
 /// Left mouse up, un-flag for rotation
 - (void)onLeftMouseUp;
+
+/// Key down, move camera with 'w', 'a', 's', 'd'
+- (void)onKeyDown:(unsigned short)keyCode;
+
+/// Key up, un-flag the keys that are marked when 'onKeyDown' was called
+- (void)onKeyUp:(unsigned short)keyCode;
 
 @end
 

@@ -8,10 +8,19 @@
 #ifndef InputCodes_h
 #define InputCodes_h
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, MouseButton) {
     Left = 1 << 0,
     Right = 1 << 1,
     LeftNRight = Left | Right,
-} MouseButton;
+};
+
+typedef NS_ENUM(unsigned short, Key) {
+    A = 0,
+    D = 2,
+    E = 14,
+    Q = 12,
+    S = 1,
+    W = 13,
+};
 
 #endif /* InputCodes_h */
