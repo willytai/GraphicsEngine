@@ -54,6 +54,12 @@ typedef struct CameraParams {
 /// Zoom in the camera
 - (void)onScrolled:(float)deltaY;
 
+/// Left mouse down, flag for rotation
+- (void)onLeftMouseDown;
+
+/// Left mouse up, un-flag for rotation
+- (void)onLeftMouseUp;
+
 @end
 
 NS_ASSUME_NONNULL_END

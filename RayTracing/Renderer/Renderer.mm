@@ -318,6 +318,15 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     [_camera onScrolled:deltaY];
 }
 
+- (void)onMouseDown:(MouseButton)button {
+    if (button == MouseButton::Left)
+        [_camera onLeftMouseDown];
+}
+
+- (void)onMouseUp {
+    [_camera onLeftMouseUp];
+}
+
 #pragma mark Matrix Math Utilities
 
 matrix_float4x4 matrix4x4_translation(float tx, float ty, float tz)

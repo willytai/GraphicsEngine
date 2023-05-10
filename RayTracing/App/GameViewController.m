@@ -16,7 +16,9 @@
 
     Renderer *_renderer;
 
-    ScrollEventCallback _scrollEventCallback;
+    ScrollCallback      _scrollCallback;
+    MouseDownCallback   _mouseDownCallback;
+    MouseUpCallback     _mouseUpCallback;
 }
 
 - (void)viewDidLoad
@@ -45,11 +47,31 @@
 
 - (void)_setupEventCallbacks {
     // mouse scrolled
-    typeof(self) __weak weakself = self;
-    _scrollEventCallback = ^(float deltaY){
-        typeof(weakself) __strong self = weakself;
-        [self->_renderer onScrolled:deltaY];
-    };
+    {
+        typeof(self) __weak weakself = self;
+        _scrollCallback = ^(float deltaY){
+            typeof(weakself) __strong self = weakself;
+            [self->_renderer onScrolled:deltaY];
+        };
+    }
+
+    // mouse down
+    {
+        typeof(self) __weak weakself = self;
+        _mouseDownCallback = ^(MouseButton button){
+            typeof(weakself) __strong self = weakself;
+            [self->_renderer onMouseDown:button];
+        };
+    }
+
+    // mouse up
+    {
+        typeof(self) __weak weakself = self;
+        _mouseUpCallback = ^(void){
+            typeof(weakself) __strong self = weakself;
+            [self->_renderer onMouseUp];
+        };
+    }
 }
 
 
@@ -63,16 +85,23 @@
     // NSLog(@"%lu", (unsigned long)NSEvent.pressedMouseButtons);
 }
 
-- (void)keyUp:(NSEvent *)event {
-    // NSLog(@"%s, %@, %u", __PRETTY_FUNCTION__, event.characters, event.keyCode);
+- (void)mouseDown:(NSEvent *)event {
+    _mouseDownCallback(NSEvent.pressedMouseButtons);
 }
 
-- (void)mouseDown:(NSEvent *)event {
-    NSLog(@"%s, %lu", __PRETTY_FUNCTION__, (unsigned long)NSEvent.pressedMouseButtons);
+/// This will only be called when the LEFT mouse button is down -> up
+- (void)mouseUp:(NSEvent *)event {
+    _mouseUpCallback();
+}
+
+/// The window defaults to not accept mouse moved events.
+/// To change the behavior, set acceptsMouseMovedEvent to Yes in the MyWindow class.
+- (void)mouseMoved:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 - (void)scrollWheel:(NSEvent *)event {
-    _scrollEventCallback(event.deltaY);
+    _scrollCallback(event.deltaY);
 }
 
 @end

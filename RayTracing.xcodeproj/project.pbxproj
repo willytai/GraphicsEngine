@@ -19,6 +19,7 @@
 		594AE8462A00BF1800830026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 594AE8452A00BF1800830026 /* Assets.xcassets */; };
 		594AE8492A00BF1800830026 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 594AE8472A00BF1800830026 /* Main.storyboard */; };
 		594AE84B2A00BF1800830026 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE84A2A00BF1800830026 /* main.m */; };
+		59940D4F2A0C0FA200D260EA /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 59940D4E2A0C0FA200D260EA /* MyWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,9 @@
 		594AE8482A00BF1800830026 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		594AE84A2A00BF1800830026 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		594AE84C2A00BF1800830026 /* RayTracing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RayTracing.entitlements; sourceTree = "<group>"; };
+		59940D4D2A0C0FA200D260EA /* MyWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
+		59940D4E2A0C0FA200D260EA /* MyWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
+		59940D502A0C12F400D260EA /* InputCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputCodes.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,9 @@
 				593D7BCE2A030F7A009424AE /* MyView.h */,
 				593D7BCF2A030F7A009424AE /* MyView.m */,
 				593D7BE42A0BFBF2009424AE /* EventCallbacks.h */,
+				59940D4D2A0C0FA200D260EA /* MyWindow.h */,
+				59940D4E2A0C0FA200D260EA /* MyWindow.m */,
+				59940D502A0C12F400D260EA /* InputCodes.h */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -198,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59940D4F2A0C0FA200D260EA /* MyWindow.m in Sources */,
 				593D7BD32A035017009424AE /* Camera.mm in Sources */,
 				593D7BE32A0AE9EE009424AE /* Logger.cpp in Sources */,
 				594AE84B2A00BF1800830026 /* main.m in Sources */,

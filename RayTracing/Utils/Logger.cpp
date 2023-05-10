@@ -13,6 +13,14 @@ namespace log {
 using std::cout;
 using std::endl;
 
+void print_float2(simd_float2 float2, const char* varname) {
+    std::cout << varname << ": (";
+    std::cout << ((float*)&float2)[0] << ", "
+              << ((float*)&float2)[1];
+    std::cout << ")\n";
+
+}
+
 void print_float3(simd_float3 float3, const char* varname) {
     std::cout << varname << ": (";
     std::cout << ((float*)&float3)[0] << ", "

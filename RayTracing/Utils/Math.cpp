@@ -13,6 +13,10 @@ namespace mathutil {
 
 #pragma mark Types
 
+simd_float2 float2(float x, float y) {
+    return simd_make_float2(x, y);
+}
+
 simd_float3 float3(float x, float y, float z) {
     return simd_make_float3(x, y, z);
 }
@@ -21,10 +25,18 @@ simd_float4 float4(float x, float y, float z, float w) {
     return simd_make_float4(x, y, z, w);
 }
 
+simd_quatf quat(float pitch, float yaw, float roll) {
+    return simd_quaternion(pitch, yaw, roll, 1.0f);
+}
+
 #pragma mark Operations
 
 simd_float4x4 matmul(simd_float4x4 x, simd_float4x4 y) {
     return simd_mul(x, y);
+}
+
+simd_float3 rotate(simd_quatf q, simd_float3 v) {
+    return simd_act(q, v);
 }
 
 #pragma mark Geometries

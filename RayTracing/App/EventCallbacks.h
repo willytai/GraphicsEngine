@@ -8,6 +8,10 @@
 #ifndef EventCallbacks_h
 #define EventCallbacks_h
 
-typedef void(^ScrollEventCallback)(float);
+#include "InputCodes.h"
+
+typedef void(^ScrollCallback)(float);
+typedef void(^MouseDownCallback)(MouseButton);
+typedef void(^MouseUpCallback)(void);
 
 #endif /* EventCallbacks_h */

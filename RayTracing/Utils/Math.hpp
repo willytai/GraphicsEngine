@@ -13,11 +13,14 @@
 namespace mathutil {
 
 /// types
+simd_float2 float2(float x, float y);
 simd_float3 float3(float x, float y, float z);
 simd_float4 float4(float x, float y, float z, float w);
+simd_quatf  quat(float pitch, float yaw, float roll);
 
 /// operations
 simd_float4x4 matmul(simd_float4x4 x, simd_float4x4 y);
+simd_float3   rotate(simd_quatf q, simd_float3 v);
 
 /// gometries
 simd_float4x4 perspective(float fovDeg, float aspect, float nearClip, float farClip);
