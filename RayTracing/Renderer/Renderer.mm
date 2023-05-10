@@ -312,6 +312,12 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     [_camera onResizeWidth:size.width Height:size.height];
 }
 
+#pragma mark Event Callbacks
+
+- (void)onScrolled:(float)deltaY {
+    [_camera onScrolled:deltaY];
+}
+
 #pragma mark Matrix Math Utilities
 
 matrix_float4x4 matrix4x4_translation(float tx, float ty, float tz)

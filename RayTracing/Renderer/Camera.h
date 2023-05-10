@@ -51,6 +51,9 @@ typedef struct CameraParams {
 /// projection matrix needs update
 - (void)onResizeWidth:(float)width Height:(float)height;
 
+/// Zoom in the camera
+- (void)onScrolled:(float)deltaY;
+
 @end
 
 NS_ASSUME_NONNULL_END

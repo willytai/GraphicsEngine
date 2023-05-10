@@ -11,9 +11,23 @@
 
 namespace mathutil {
 
+#pragma mark Types
+
+simd_float3 float3(float x, float y, float z) {
+    return simd_make_float3(x, y, z);
+}
+
+simd_float4 float4(float x, float y, float z, float w) {
+    return simd_make_float4(x, y, z, w);
+}
+
+#pragma mark Operations
+
 simd_float4x4 matmul(simd_float4x4 x, simd_float4x4 y) {
     return simd_mul(x, y);
 }
+
+#pragma mark Geometries
 
 simd_float4x4 perspective(float fovDeg, float aspect, float nearClip, float farClip) {
     float fovRad = fovDeg / 180.0f * M_PI;
@@ -46,6 +60,10 @@ simd_float4x4 view(simd_float3 eye, simd_float3 center, simd_float3 up) {
         { x.z, y.z, z.z, 0 },
         { t.x, t.y, t.z, 1 }
     }};
+}
+
+float length(simd_float3 float3) {
+    return simd_length(float3);
 }
 
 

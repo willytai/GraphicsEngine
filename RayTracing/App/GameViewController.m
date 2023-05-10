@@ -8,12 +8,15 @@
 #import "GameViewController.h"
 #import "Renderer.h"
 #import "MyView.h"
+#import "EventCallbacks.h"
 
 @implementation GameViewController
 {
     MyView *_view;
 
     Renderer *_renderer;
+
+    ScrollEventCallback _scrollEventCallback;
 }
 
 - (void)viewDidLoad
@@ -36,6 +39,17 @@
     [_renderer mtkView:_view drawableSizeWillChange:_view.bounds.size];
 
     _view.delegate = _renderer;
+
+    [self _setupEventCallbacks];
+}
+
+- (void)_setupEventCallbacks {
+    // mouse scrolled
+    typeof(self) __weak weakself = self;
+    _scrollEventCallback = ^(float deltaY){
+        typeof(weakself) __strong self = weakself;
+        [self->_renderer onScrolled:deltaY];
+    };
 }
 
 
@@ -58,7 +72,7 @@
 }
 
 - (void)scrollWheel:(NSEvent *)event {
-    NSLog(@"%.4f, %.4f", event.scrollingDeltaY, event.deltaY);
+    _scrollEventCallback(event.deltaY);
 }
 
 @end

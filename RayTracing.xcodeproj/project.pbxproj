@@ -32,6 +32,7 @@
 		593D7BDF2A0ACDDF009424AE /* Timer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
 		593D7BE12A0AE9EE009424AE /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		593D7BE22A0AE9EE009424AE /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Logger.hpp; sourceTree = "<group>"; };
+		593D7BE42A0BFBF2009424AE /* EventCallbacks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventCallbacks.h; sourceTree = "<group>"; };
 		594AE8362A00BF1700830026 /* RayTracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RayTracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		594AE8392A00BF1700830026 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		594AE83A2A00BF1700830026 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 				594AE8402A00BF1700830026 /* GameViewController.m */,
 				593D7BCE2A030F7A009424AE /* MyView.h */,
 				593D7BCF2A030F7A009424AE /* MyView.m */,
+				593D7BE42A0BFBF2009424AE /* EventCallbacks.h */,
 			);
 			path = App;
 			sourceTree = "<group>";
