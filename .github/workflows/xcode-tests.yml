@@ -2,7 +2,7 @@ on:
   push:
     branches:
       # trigger on the main branch only for now
-      - main
+      - master
     paths:
       # only run tests when src code/configuration has changed
       - '**.h'
