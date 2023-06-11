@@ -1,4 +1,8 @@
+name: 'Xcode Unit Testing'
+
 on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
   push:
     branches:
       # trigger on the main branch only for now
@@ -13,9 +17,6 @@ on:
       - '**.mm'
       - '**xcode-tests.yml'
       - 'RayTracing.xcodeproj/**'
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 jobs:
   build:
@@ -37,14 +38,17 @@ jobs:
           #   code-coverage: false
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: mxcl/xcodebuild@v2.0.0
-        with:
-          # xcode: ${{ matrix.xcode }}
-          configuration: ${{ matrix.configuration }}
-          platform: macOS
-          action: test
-          workspace: RayTracing.xcodeproj/project.xcworkspace
-          scheme: RayTracing
-          code-sign-certificate: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          code-sign-certificate-passphrase: ${{ secrets.BUILD_CERTIFICATE_PASSPHRASE }}
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build & Test
+        uses: mxcl/xcodebuild@v2.0.0
+          with:
+            action: test
+            platform: macOS
+            workspace: RayTracing.xcodeproj/project.xcworkspace
+            scheme: RayTracing
+            # xcode: ${{ matrix.xcode }}
+            configuration: ${{ matrix.configuration }}
+            code-sign-certificate: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+            code-sign-certificate-passphrase: ${{ secrets.BUILD_CERTIFICATE_PASSPHRASE }}
