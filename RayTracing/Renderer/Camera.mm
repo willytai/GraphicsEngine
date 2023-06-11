@@ -5,11 +5,12 @@
 //  Created by Willy Tai on 5/3/23.
 //
 
-#import "Camera.h"
-#import "Math.hpp"
-#import "Logger.hpp"
-#import "InputCodes.h"
 #import <Cocoa/Cocoa.h>
+#import "Camera.h"
+#import "Geometries/Coordinates.hpp"
+#import "../App/InputCodes.h"
+#import "../Utils/Math.hpp"
+#import "../Utils/Logger.hpp"
 
 
 #pragma mark Constants
@@ -60,8 +61,8 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
 - (nonnull instancetype)initWithParams:(CameraParams)params {
     if (self = [super init]) {
         _params = params;
-        _position = mathutil::float3(0.0f, 0.0f, -20.0f);
-        _focalPoint = mathutil::float3(0.0f, 0.0f, 0.0f);
+        _position = mathutil::float3(0.0f, 0.0f, 10.0f);
+        _focalPoint = WORLD_SPACE_ORIGIN;
         _distance = mathutil::length(_position - _focalPoint);
         _pitch = 0.0f;
         _yaw = 0.0f;
@@ -212,11 +213,11 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
 }
 
 - (void)_calculateViewMatrix {
-    _viewMat = mathutil::view(_position, _focalPoint, mathutil::float3(0.0f, 1.0f, 0.0f));
+    _viewMat = mathutil::view(_position, _focalPoint, WORLD_SPACE_UP);
 }
 
 - (void)_calculateViewProjectionMatrix {
-    _viewProjMat = mathutil::matmul(_projMat, _viewMat);
+    _viewProjMat = mathutil::matmul(_viewMat, _projMat);
 }
 
 - (float)_zoomSpeed {
@@ -228,49 +229,43 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
 
 - (void)_rotateWithDeltaMouse:(simd_float2)deltaMouse
                 WithDeltaTime:(TimeStep)deltaTime {
-    static const float speed = 5e-5f;
+    static const float speed = 2e-5f;
     float ms = deltaTime.ms();
     _pitch -= deltaMouse.y * speed * ms;
     _yaw += deltaMouse.x * speed * ms;
     simd_quatf orientation = mathutil::quat(_pitch, _yaw, 0.0f);
-    simd_float3 forward = mathutil::rotate(orientation, mathutil::float3(0.0f, 0.0f, 1.0f));
+    simd_float3 forward = mathutil::rotate(orientation, WORLD_SPACE_FORWARD);
     _focalPoint = _position + _distance * forward;
     _updateView = YES;
 }
 
 - (void)_translateWithDeltaTime:(TimeStep)deltaTime {
-    static const simd_float3 up = mathutil::float3(0.0f, 1.0f, 0.0f);
-    static const simd_float3 down = mathutil::float3(0.0f, -1.0f, 0.0f);
-    static const simd_float3 left = mathutil::float3(-1.0f, 0.0f, 0.0f);
-    static const simd_float3 right = mathutil::float3(1.0f, 0.0f, 0.0f);
-    static const simd_float3 forward = mathutil::float3(0.0f, 0.0f, 1.0f);
-    static const simd_float3 backward = mathutil::float3(0.0f, 0.0f, -1.0f);
-    static const float speed = 1e-2f;
+    static const float speed = 5e-3f;
     float deltaDist = deltaTime.ms() * speed;
-    simd_float3 translation = mathutil::float3(0.0f, 0.0f, 0.0f);
+    simd_float3 translation = mathutil::float3();
     if (_keyDownFlags & A_KEY_FLAG) {
         // left
-        translation += deltaDist * left;
+        translation += deltaDist * WORLD_SPACE_LEFT;
     }
     if (_keyDownFlags & D_KEY_FLAG) {
         // right
-        translation += deltaDist * right;
+        translation += deltaDist * WORLD_SPACE_RIGHT;
     }
     if (_keyDownFlags & W_KEY_FLAG) {
         // forward
-        translation += deltaDist * forward;
+        translation += deltaDist * WORLD_SPACE_FORWARD;
     }
     if (_keyDownFlags & S_KEY_FLAG) {
         // backward
-        translation += deltaDist * backward;
+        translation += deltaDist * WORLD_SPACE_BACKWARD;
     }
     if (_keyDownFlags & Q_KEY_FLAG) {
         // up
-        translation += deltaDist * up;
+        translation += deltaDist * WORLD_SPACE_UP;
     }
     if (_keyDownFlags & E_KEY_FLAG) {
         // down
-        translation += deltaDist * down;
+        translation += deltaDist * WORLD_SPACE_DOWN;
     }
     _position += translation;
     _focalPoint += translation;

@@ -13,6 +13,18 @@ namespace mathutil {
 
 #pragma mark Types
 
+simd_float2 float2() {
+    return float2(0.0f, 0.0f);
+}
+
+simd_float3 float3() {
+    return float3(0.0f, 0.0f, 0.0f);
+}
+
+simd_float4 float4() {
+    return float4(0.0f, 0.0f, 0.0f, 0.0f);
+}
+
 simd_float2 float2(float x, float y) {
     return simd_make_float2(x, y);
 }
@@ -23,6 +35,10 @@ simd_float3 float3(float x, float y, float z) {
 
 simd_float4 float4(float x, float y, float z, float w) {
     return simd_make_float4(x, y, z, w);
+}
+
+simd_float4 float4(simd_float3 vec3, float w) {
+    return simd_make_float4(vec3, w);
 }
 
 simd_quatf quat(float pitch, float yaw, float roll) {
@@ -45,33 +61,33 @@ simd_float4x4 perspective(float fovDeg, float aspect, float nearClip, float farC
     float fovRad = fovDeg / 180.0f * M_PI;
     float ys = 1.0f / tanf(fovRad * 0.5f);
     float xs = ys / aspect;
-    float zs = farClip / (nearClip - farClip);
+    float zs = -farClip / (farClip - nearClip);
 
-    return (simd_float4x4) {{
-        {  xs,  0.0f,           0.0f,   0.0f},
-        {0.0f,    ys,           0.0f,   0.0f},
-        {0.0f,  0.0f,             zs,  -1.0f},
-        {0.0f,  0.0f,  nearClip * zs,   0.0f},
-    }};
+    // matrices are column majored
+    return simd_matrix_from_rows(
+        (simd_float4){  xs,  0.0f,           0.0f,   0.0f},
+        (simd_float4){0.0f,    ys,           0.0f,   0.0f},
+        (simd_float4){0.0f,  0.0f,             zs,  -1.0f},
+        (simd_float4){0.0f,  0.0f,  nearClip * zs,   0.0f}
+    );
 }
 
 simd_float4x4 view(simd_float3 eye, simd_float3 center, simd_float3 up) {
-    /// In our coordinate system, the positive z direction points toward the view pane.
-    /// It seems that in the simd coordinate system, positive z points to the opposite direction,
-    /// so the z axis is flipped here to calculate x, y, t, and then flipped back to generate the
-    /// correct view matrix.
-    simd_float3 z = -simd_normalize(center - eye);
-    simd_float3 x = simd_normalize(simd_cross(z, up));
-    simd_float3 y = simd_cross(x, z);
+    // find the three axis of the camera space in world space
+    // everything is in right-handed coordinate system
+    simd_float3 z = simd_normalize(eye - center);
+    simd_float3 x = simd_normalize(simd_cross(up, z));
+    simd_float3 y = simd_cross(z, x);
+    // translation component
     simd_float3 t = (simd_float3){ -simd_dot(x, eye), -simd_dot(y, eye), -simd_dot(z, eye) };
-    z = -z;
 
-    return (matrix_float4x4) {{
-        { x.x, y.x, z.x, 0 },
-        { x.y, y.y, z.y, 0 },
-        { x.z, y.z, z.z, 0 },
-        { t.x, t.y, t.z, 1 }
-    }};
+    // matrices are column majored
+    return simd_matrix_from_rows(
+        (simd_float4){x.x, y.x, z.x, 0.0},
+        (simd_float4){x.y, y.y, z.y, 0.0},
+        (simd_float4){x.z, y.z, z.z, 0.0},
+        (simd_float4){t.x, t.y, t.z, 1.0}
+    );
 }
 
 float length(simd_float3 float3) {

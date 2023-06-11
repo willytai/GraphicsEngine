@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
-#import "Timer.hpp"
+#import "../Utils/Timer.hpp"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,16 +29,16 @@ typedef struct CameraParams {
 /// the parameters of the camera
 @property (nonatomic, readonly) CameraParams params;
 
-/// position of the camera
+/// position of the camera, in world space
 @property (nonatomic, readonly) simd_float3 position;
 
-/// focal point of the camera
+/// focal point of the camera, in world space
 @property (nonatomic, readonly) simd_float3 focalPoint;
 
-/// the view matrix
+/// the view matrix, transforms from world space to camera space
 @property (nonatomic, readonly) simd_float4x4 viewMat;
 
-/// the projection matrix
+/// the projection matrix, transforms from camera space to projection space
 @property (nonatomic, readonly) simd_float4x4 projMat;
 
 /// the view * projection matrix

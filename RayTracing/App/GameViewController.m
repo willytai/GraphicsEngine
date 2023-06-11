@@ -6,15 +6,15 @@
 //
 
 #import "GameViewController.h"
-#import "Renderer.h"
-#import "MyView.h"
 #import "EventCallbacks.h"
+#import "MyView.h"
+#import "../Renderer/Renderer.h"
 
 @implementation GameViewController
 {
-    MyView *_view;
+    MyView* _view;
 
-    Renderer *_renderer;
+    Renderer* _renderer;
 
     ScrollCallback      _scrollCallback;
     MouseDownCallback   _mouseDownCallback;
@@ -99,7 +99,7 @@
 /// Event Handling Here
 
 - (void)keyDown:(NSEvent *)event {
-    NSLog(@"%s, %@, %u, %lu", __PRETTY_FUNCTION__, event.characters, event.keyCode, (unsigned long)event.modifierFlags);
+    // NSLog(@"%s, %@, %u, %lu", __PRETTY_FUNCTION__, event.characters, event.keyCode, (unsigned long)event.modifierFlags);
     _keyDownCallback(event.keyCode, event.modifierFlags);
 }
 

@@ -19,8 +19,28 @@
 		594AE8462A00BF1800830026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 594AE8452A00BF1800830026 /* Assets.xcassets */; };
 		594AE8492A00BF1800830026 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 594AE8472A00BF1800830026 /* Main.storyboard */; };
 		594AE84B2A00BF1800830026 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE84A2A00BF1800830026 /* main.m */; };
+		5957C8A92A35177D00416BBA /* Coordinates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5957C8A72A35177D00416BBA /* Coordinates.cpp */; };
+		5957C8AB2A35286900416BBA /* GeometriesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5957C8AA2A35286900416BBA /* GeometriesTests.mm */; };
+		5957C8B12A353A2100416BBA /* RendererTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5957C8B02A353A2100416BBA /* RendererTests.mm */; };
 		59940D4F2A0C0FA200D260EA /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 59940D4E2A0C0FA200D260EA /* MyWindow.m */; };
+		59940D532A19DDB500D260EA /* Submesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D522A19DDB500D260EA /* Submesh.mm */; };
+		59940D562A19DF7F00D260EA /* MeshBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D552A19DF7F00D260EA /* MeshBuffer.mm */; };
+		59940D592A19E09100D260EA /* Mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D582A19E09100D260EA /* Mesh.mm */; };
+		59940D5C2A1DCE0100D260EA /* BufferDataAllocator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D5B2A1DCE0100D260EA /* BufferDataAllocator.mm */; };
+		59940D602A21355500D260EA /* Icosphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59940D5E2A21355500D260EA /* Icosphere.cpp */; };
+		59940D6C2A28678800D260EA /* MathTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D6B2A28678800D260EA /* MathTests.mm */; };
+		59940D7A2A2D4C8400D260EA /* Cube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59940D782A2D4C8400D260EA /* Cube.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59940D6D2A28678800D260EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 594AE82E2A00BF1700830026 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 594AE8352A00BF1700830026;
+			remoteInfo = RayTracing;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		593D7BCE2A030F7A009424AE /* MyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyView.h; sourceTree = "<group>"; };
@@ -47,13 +67,43 @@
 		594AE8482A00BF1800830026 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		594AE84A2A00BF1800830026 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		594AE84C2A00BF1800830026 /* RayTracing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RayTracing.entitlements; sourceTree = "<group>"; };
+		5957C8A72A35177D00416BBA /* Coordinates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Coordinates.cpp; sourceTree = "<group>"; };
+		5957C8A82A35177D00416BBA /* Coordinates.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Coordinates.hpp; sourceTree = "<group>"; };
+		5957C8AA2A35286900416BBA /* GeometriesTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GeometriesTests.mm; sourceTree = "<group>"; };
+		5957C8AD2A352B1A00416BBA /* CompareUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CompareUtils.hpp; sourceTree = "<group>"; };
+		5957C8B02A353A2100416BBA /* RendererTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RendererTests.mm; sourceTree = "<group>"; };
 		59940D4D2A0C0FA200D260EA /* MyWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
 		59940D4E2A0C0FA200D260EA /* MyWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
 		59940D502A0C12F400D260EA /* InputCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputCodes.h; sourceTree = "<group>"; };
+		59940D512A19DDB500D260EA /* Submesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Submesh.h; sourceTree = "<group>"; };
+		59940D522A19DDB500D260EA /* Submesh.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Submesh.mm; sourceTree = "<group>"; };
+		59940D542A19DF7F00D260EA /* MeshBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshBuffer.h; sourceTree = "<group>"; };
+		59940D552A19DF7F00D260EA /* MeshBuffer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshBuffer.mm; sourceTree = "<group>"; };
+		59940D572A19E09100D260EA /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		59940D582A19E09100D260EA /* Mesh.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Mesh.mm; sourceTree = "<group>"; };
+		59940D5A2A1DCE0100D260EA /* BufferDataAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BufferDataAllocator.h; sourceTree = "<group>"; };
+		59940D5B2A1DCE0100D260EA /* BufferDataAllocator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferDataAllocator.mm; sourceTree = "<group>"; };
+		59940D5E2A21355500D260EA /* Icosphere.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Icosphere.cpp; sourceTree = "<group>"; };
+		59940D5F2A21355500D260EA /* Icosphere.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Icosphere.hpp; sourceTree = "<group>"; };
+		59940D622A2135DC00D260EA /* GeometryObj.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GeometryObj.hpp; sourceTree = "<group>"; };
+		59940D642A2138A200D260EA /* Common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Common.hpp; sourceTree = "<group>"; };
+		59940D692A28678800D260EA /* RayTracingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RayTracingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59940D6B2A28678800D260EA /* MathTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MathTests.mm; sourceTree = "<group>"; };
+		59940D742A2996A400D260EA /* Convert2Metal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Convert2Metal.h; sourceTree = "<group>"; };
+		59940D752A29979400D260EA /* VertexType.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexType.hpp; sourceTree = "<group>"; };
+		59940D782A2D4C8400D260EA /* Cube.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cube.cpp; sourceTree = "<group>"; };
+		59940D792A2D4C8400D260EA /* Cube.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cube.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		594AE8332A00BF1700830026 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59940D662A28678800D260EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -66,10 +116,11 @@
 		593D7BC42A017889009424AE /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				59940D772A2998F600D260EA /* Asset */,
+				59940D762A29989800D260EA /* Shader */,
+				59940D5D2A2134B300D260EA /* Geometries */,
 				594AE83C2A00BF1700830026 /* Renderer.h */,
 				594AE83D2A00BF1700830026 /* Renderer.mm */,
-				594AE8422A00BF1700830026 /* Shaders.metal */,
-				594AE8442A00BF1700830026 /* ShaderTypes.h */,
 				593D7BD12A035017009424AE /* Camera.h */,
 				593D7BD22A035017009424AE /* Camera.mm */,
 			);
@@ -102,6 +153,8 @@
 				593D7BDF2A0ACDDF009424AE /* Timer.hpp */,
 				593D7BE12A0AE9EE009424AE /* Logger.cpp */,
 				593D7BE22A0AE9EE009424AE /* Logger.hpp */,
+				59940D642A2138A200D260EA /* Common.hpp */,
+				59940D742A2996A400D260EA /* Convert2Metal.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -110,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				594AE8382A00BF1700830026 /* RayTracing */,
+				59940D6A2A28678800D260EA /* RayTracingTests */,
 				594AE8372A00BF1700830026 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				594AE8362A00BF1700830026 /* RayTracing.app */,
+				59940D692A28678800D260EA /* RayTracingTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,6 +189,56 @@
 				594AE84C2A00BF1800830026 /* RayTracing.entitlements */,
 			);
 			path = RayTracing;
+			sourceTree = "<group>";
+		};
+		59940D5D2A2134B300D260EA /* Geometries */ = {
+			isa = PBXGroup;
+			children = (
+				59940D5E2A21355500D260EA /* Icosphere.cpp */,
+				59940D5F2A21355500D260EA /* Icosphere.hpp */,
+				59940D622A2135DC00D260EA /* GeometryObj.hpp */,
+				59940D782A2D4C8400D260EA /* Cube.cpp */,
+				59940D792A2D4C8400D260EA /* Cube.hpp */,
+				5957C8A72A35177D00416BBA /* Coordinates.cpp */,
+				5957C8A82A35177D00416BBA /* Coordinates.hpp */,
+			);
+			path = Geometries;
+			sourceTree = "<group>";
+		};
+		59940D6A2A28678800D260EA /* RayTracingTests */ = {
+			isa = PBXGroup;
+			children = (
+				59940D6B2A28678800D260EA /* MathTests.mm */,
+				5957C8AA2A35286900416BBA /* GeometriesTests.mm */,
+				5957C8AD2A352B1A00416BBA /* CompareUtils.hpp */,
+				5957C8B02A353A2100416BBA /* RendererTests.mm */,
+			);
+			path = RayTracingTests;
+			sourceTree = "<group>";
+		};
+		59940D762A29989800D260EA /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				594AE8422A00BF1700830026 /* Shaders.metal */,
+				594AE8442A00BF1700830026 /* ShaderTypes.h */,
+				59940D752A29979400D260EA /* VertexType.hpp */,
+			);
+			path = Shader;
+			sourceTree = "<group>";
+		};
+		59940D772A2998F600D260EA /* Asset */ = {
+			isa = PBXGroup;
+			children = (
+				59940D512A19DDB500D260EA /* Submesh.h */,
+				59940D522A19DDB500D260EA /* Submesh.mm */,
+				59940D542A19DF7F00D260EA /* MeshBuffer.h */,
+				59940D552A19DF7F00D260EA /* MeshBuffer.mm */,
+				59940D572A19E09100D260EA /* Mesh.h */,
+				59940D582A19E09100D260EA /* Mesh.mm */,
+				59940D5A2A1DCE0100D260EA /* BufferDataAllocator.h */,
+				59940D5B2A1DCE0100D260EA /* BufferDataAllocator.mm */,
+			);
+			path = Asset;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +261,24 @@
 			productReference = 594AE8362A00BF1700830026 /* RayTracing.app */;
 			productType = "com.apple.product-type.application";
 		};
+		59940D682A28678800D260EA /* RayTracingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59940D6F2A28678800D260EA /* Build configuration list for PBXNativeTarget "RayTracingTests" */;
+			buildPhases = (
+				59940D652A28678800D260EA /* Sources */,
+				59940D662A28678800D260EA /* Frameworks */,
+				59940D672A28678800D260EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59940D6E2A28678800D260EA /* PBXTargetDependency */,
+			);
+			name = RayTracingTests;
+			productName = RayTracingTests;
+			productReference = 59940D692A28678800D260EA /* RayTracingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -167,6 +290,10 @@
 				TargetAttributes = {
 					594AE8352A00BF1700830026 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					59940D682A28678800D260EA = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 594AE8352A00BF1700830026;
 					};
 				};
 			};
@@ -184,6 +311,7 @@
 			projectRoot = "";
 			targets = (
 				594AE8352A00BF1700830026 /* RayTracing */,
+				59940D682A28678800D260EA /* RayTracingTests */,
 			);
 		};
 /* End PBXProject section */
@@ -198,6 +326,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59940D672A28678800D260EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -205,21 +340,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59940D7A2A2D4C8400D260EA /* Cube.cpp in Sources */,
+				59940D602A21355500D260EA /* Icosphere.cpp in Sources */,
 				59940D4F2A0C0FA200D260EA /* MyWindow.m in Sources */,
+				5957C8A92A35177D00416BBA /* Coordinates.cpp in Sources */,
 				593D7BD32A035017009424AE /* Camera.mm in Sources */,
+				59940D5C2A1DCE0100D260EA /* BufferDataAllocator.mm in Sources */,
 				593D7BE32A0AE9EE009424AE /* Logger.cpp in Sources */,
 				594AE84B2A00BF1800830026 /* main.m in Sources */,
 				594AE8432A00BF1700830026 /* Shaders.metal in Sources */,
 				593D7BDD2A0AC592009424AE /* Math.cpp in Sources */,
+				59940D592A19E09100D260EA /* Mesh.mm in Sources */,
 				593D7BD02A030F7A009424AE /* MyView.m in Sources */,
 				594AE83E2A00BF1700830026 /* Renderer.mm in Sources */,
 				593D7BE02A0ACDDF009424AE /* Timer.cpp in Sources */,
 				594AE8412A00BF1700830026 /* GameViewController.m in Sources */,
+				59940D562A19DF7F00D260EA /* MeshBuffer.mm in Sources */,
 				594AE83B2A00BF1700830026 /* AppDelegate.m in Sources */,
+				59940D532A19DDB500D260EA /* Submesh.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59940D652A28678800D260EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59940D6C2A28678800D260EA /* MathTests.mm in Sources */,
+				5957C8AB2A35286900416BBA /* GeometriesTests.mm in Sources */,
+				5957C8B12A353A2100416BBA /* RendererTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59940D6E2A28678800D260EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 594AE8352A00BF1700830026 /* RayTracing */;
+			targetProxy = 59940D6D2A28678800D260EA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		594AE8472A00BF1800830026 /* Main.storyboard */ = {
@@ -396,6 +556,50 @@
 			};
 			name = Release;
 		};
+		59940D702A28678800D260EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Q7U822RR6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willy.RayTracingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RayTracing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RayTracing";
+			};
+			name = Debug;
+		};
+		59940D712A28678800D260EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Q7U822RR6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willy.RayTracingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RayTracing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RayTracing";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -413,6 +617,15 @@
 			buildConfigurations = (
 				594AE8502A00BF1800830026 /* Debug */,
 				594AE8512A00BF1800830026 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59940D6F2A28678800D260EA /* Build configuration list for PBXNativeTarget "RayTracingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59940D702A28678800D260EA /* Debug */,
+				59940D712A28678800D260EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -9,16 +9,26 @@
 #import <ModelIO/ModelIO.h>
 
 #import "Renderer.h"
-
-// Include header shared between C code here, which executes Metal API commands, and .metal files
-#import "ShaderTypes.h"
+#import "Asset/Mesh.h"
+#import "Asset/BufferDataAllocator.h"
 #import "Camera.h"
-#import "Timer.hpp"
-#import "Logger.hpp"
+#import "Geometries/Cube.hpp"
+#import "Shader/ShaderTypes.h"
+#import "../Utils/Timer.hpp"
+#import "../Utils/Logger.hpp"
+#import "../Utils/Math.hpp"
 
 static const NSUInteger kMaxBuffersInFlight = 3;
 
 static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
+
+@interface Renderer()
+
+/// Declaring as private property so that we can give access to test classes by
+/// declaring the interface.
+@property(nonatomic, readonly, nonnull) MTLVertexDescriptor* mtlVertexDescriptor;
+
+@end
 
 @implementation Renderer
 {
@@ -29,8 +39,8 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     id <MTLBuffer> _dynamicUniformBuffer;
     id <MTLRenderPipelineState> _pipelineState;
     id <MTLDepthStencilState> _depthState;
-    id <MTLTexture> _colorMap;
-    MTLVertexDescriptor *_mtlVertexDescriptor;
+    // id <MTLTexture> _colorMap;
+    // MTLVertexDescriptor* _mtlVertexDescriptor;
 
     uint32_t _uniformBufferOffset;
 
@@ -38,14 +48,15 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 
     void* _uniformBufferAddress;
 
-    float _rotation;
+    // float _rotation;
 
-    MTKMesh *_mesh;
+    // MTKMesh *_mesh;
 
 
     /// added
     Timer   _timer;
     Camera* _camera;
+    Mesh*   _testMesh;
 }
 
 - (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
@@ -57,8 +68,6 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
         _inFlightSemaphore = dispatch_semaphore_create(kMaxBuffersInFlight);
         [self _loadMetalWithView:view];
         [self _loadAssets];
-
-
         [self _initCamera];
         _timer.reset();
     }
@@ -86,32 +95,16 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB;
     view.sampleCount = 1;
 
-    _mtlVertexDescriptor = [[MTLVertexDescriptor alloc] init];
-
-    _mtlVertexDescriptor.attributes[VertexAttributePosition].format = MTLVertexFormatFloat3;
-    _mtlVertexDescriptor.attributes[VertexAttributePosition].offset = 0;
-    _mtlVertexDescriptor.attributes[VertexAttributePosition].bufferIndex = BufferIndexMeshPositions;
-
-    _mtlVertexDescriptor.attributes[VertexAttributeTexcoord].format = MTLVertexFormatFloat2;
-    _mtlVertexDescriptor.attributes[VertexAttributeTexcoord].offset = 0;
-    _mtlVertexDescriptor.attributes[VertexAttributeTexcoord].bufferIndex = BufferIndexMeshGenerics;
-
-    _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stride = 12;
-    _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stepRate = 1;
-    _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stepFunction = MTLVertexStepFunctionPerVertex;
-
-    _mtlVertexDescriptor.layouts[BufferIndexMeshGenerics].stride = 8;
-    _mtlVertexDescriptor.layouts[BufferIndexMeshGenerics].stepRate = 1;
-    _mtlVertexDescriptor.layouts[BufferIndexMeshGenerics].stepFunction = MTLVertexStepFunctionPerVertex;
+    [self _initVertexDescriptor];
 
     id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
 
-    id <MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"vertexShader"];
+    id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"vertexShader"];
 
-    id <MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"fragmentShader"];
+    id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"fragmentShader"];
 
-    MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
-    pipelineStateDescriptor.label = @"MyPipeline";
+    MTLRenderPipelineDescriptor* pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
+    pipelineStateDescriptor.label = @"FinalPipeline";
     pipelineStateDescriptor.rasterSampleCount = view.sampleCount;
     pipelineStateDescriptor.vertexFunction = vertexFunction;
     pipelineStateDescriptor.fragmentFunction = fragmentFunction;
@@ -127,7 +120,7 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
         NSLog(@"Failed to created pipeline state, error %@", error);
     }
 
-    MTLDepthStencilDescriptor *depthStateDesc = [[MTLDepthStencilDescriptor alloc] init];
+    MTLDepthStencilDescriptor* depthStateDesc = [[MTLDepthStencilDescriptor alloc] init];
     depthStateDesc.depthCompareFunction = MTLCompareFunctionLess;
     depthStateDesc.depthWriteEnabled = YES;
     _depthState = [_device newDepthStencilStateWithDescriptor:depthStateDesc];
@@ -142,56 +135,92 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     _commandQueue = [_device newCommandQueue];
 }
 
+- (void)_initVertexDescriptor {
+    _mtlVertexDescriptor = [[MTLVertexDescriptor alloc] init];
+
+    _mtlVertexDescriptor.attributes[VertexAttributePosition].format = MTLVertexFormatFloat3;
+    _mtlVertexDescriptor.attributes[VertexAttributePosition].offset = 0;
+    _mtlVertexDescriptor.attributes[VertexAttributePosition].bufferIndex = BufferIndexMeshPositions;
+
+    _mtlVertexDescriptor.attributes[VertexAttributeNormal].format = MTLVertexFormatFloat3;
+    _mtlVertexDescriptor.attributes[VertexAttributeNormal].offset = 0;
+    _mtlVertexDescriptor.attributes[VertexAttributeNormal].bufferIndex = BufferIndexMeshNormals;
+
+    _mtlVertexDescriptor.attributes[VertexAttributeMaterialID].format = MTLVertexFormatUChar;
+    _mtlVertexDescriptor.attributes[VertexAttributeMaterialID].offset = 0;
+    _mtlVertexDescriptor.attributes[VertexAttributeMaterialID].bufferIndex = BufferIndexMeshMaterialID;
+
+    _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stride = sizeof(VtxPositionType);
+    _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stepRate = 1;
+    _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stepFunction = MTLVertexStepFunctionPerVertex;
+
+    _mtlVertexDescriptor.layouts[BufferIndexMeshNormals].stride = sizeof(VtxNormalType);
+    _mtlVertexDescriptor.layouts[BufferIndexMeshNormals].stepRate = 1;
+    _mtlVertexDescriptor.layouts[BufferIndexMeshNormals].stepFunction = MTLVertexStepFunctionPerVertex;
+
+    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stride = sizeof(VtxMaterialIDType);
+    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepRate = 1;
+    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepFunction = MTLVertexStepFunctionPerVertex;
+}
+
 - (void)_loadAssets
 {
+
+    BufferDataAllocator* bufferDataAllocator = [[BufferDataAllocator alloc] initWithDevice:_device];
+    _testMesh = [Mesh newCubeWithDimensionX:5.0f Y:1.0f Z:10.0f Allocator:bufferDataAllocator];
+    _testMesh = [Mesh newIcosphereWithSubdivisions:0
+                                         Allocator:bufferDataAllocator];
+    
+
     /// Load assets into metal objects
 
-    NSError *error;
+    // NSError *error;
 
-    MTKMeshBufferAllocator *metalAllocator = [[MTKMeshBufferAllocator alloc]
-                                              initWithDevice: _device];
+    // MTKMeshBufferAllocator *metalAllocator = [[MTKMeshBufferAllocator alloc]
+    //                                           initWithDevice: _device];
 
-    MDLMesh *mdlMesh = [MDLMesh newBoxWithDimensions:(vector_float3){4, 4, 4}
-                                            segments:(vector_uint3){2, 2, 2}
-                                        geometryType:MDLGeometryTypeTriangles
-                                       inwardNormals:NO
-                                           allocator:metalAllocator];
+    // MDLMesh *mdlMesh = [MDLMesh newEllipsoidWithRadii:mathutil::float3(3.0f, 3.0f, 3.0f)
+    //                                    radialSegments:20
+    //                                  verticalSegments:20
+    //                                      geometryType:MDLGeometryTypeTriangles
+    //                                     inwardNormals:NO
+    //                                        hemisphere:NO
+    //                                         allocator:metalAllocator];
 
-    MDLVertexDescriptor *mdlVertexDescriptor =
-    MTKModelIOVertexDescriptorFromMetal(_mtlVertexDescriptor);
+    // MDLVertexDescriptor *mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(_mtlVertexDescriptor);
 
-    mdlVertexDescriptor.attributes[VertexAttributePosition].name  = MDLVertexAttributePosition;
-    mdlVertexDescriptor.attributes[VertexAttributeTexcoord].name  = MDLVertexAttributeTextureCoordinate;
+    // mdlVertexDescriptor.attributes[VertexAttributePosition].name  = MDLVertexAttributePosition;
+    // mdlVertexDescriptor.attributes[VertexAttributeNormal].name  = MDLVertexAttributeNormal;
 
-    mdlMesh.vertexDescriptor = mdlVertexDescriptor;
+    // mdlMesh.vertexDescriptor = mdlVertexDescriptor;
 
-    _mesh = [[MTKMesh alloc] initWithMesh:mdlMesh
-                                   device:_device
-                                    error:&error];
+    // _mesh = [[MTKMesh alloc] initWithMesh:mdlMesh
+    //                                device:_device
+    //                                 error:&error];
 
-    if(!_mesh || error)
-    {
-        NSLog(@"Error creating MetalKit mesh %@", error.localizedDescription);
-    }
+    // if(!_mesh || error)
+    // {
+    //     NSLog(@"Error creating MetalKit mesh %@", error.localizedDescription);
+    // }
 
-    MTKTextureLoader* textureLoader = [[MTKTextureLoader alloc] initWithDevice:_device];
+    // MTKTextureLoader* textureLoader = [[MTKTextureLoader alloc] initWithDevice:_device];
 
-    NSDictionary *textureLoaderOptions =
-    @{
-      MTKTextureLoaderOptionTextureUsage       : @(MTLTextureUsageShaderRead),
-      MTKTextureLoaderOptionTextureStorageMode : @(MTLStorageModePrivate)
-      };
+    // NSDictionary *textureLoaderOptions =
+    // @{
+    //   MTKTextureLoaderOptionTextureUsage       : @(MTLTextureUsageShaderRead),
+    //   MTKTextureLoaderOptionTextureStorageMode : @(MTLStorageModePrivate)
+    //   };
 
-    _colorMap = [textureLoader newTextureWithName:@"ColorMap"
-                                      scaleFactor:1.0
-                                           bundle:nil
-                                          options:textureLoaderOptions
-                                            error:&error];
+    // _colorMap = [textureLoader newTextureWithName:@"ColorMap"
+    //                                   scaleFactor:1.0
+    //                                        bundle:nil
+    //                                       options:textureLoaderOptions
+    //                                         error:&error];
 
-    if(!_colorMap || error)
-    {
-        NSLog(@"Error creating texture %@", error.localizedDescription);
-    }
+    // if(!_colorMap || error)
+    // {
+    //     NSLog(@"Error creating texture %@", error.localizedDescription);
+    // }
 }
 
 #pragma mark Per Frame Update
@@ -214,16 +243,11 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     // NSLog(@"delta time: %.4f", deltaTime.ms());
     [_camera onUpdateWithDeltaTime:deltaTime];
 
-    Uniforms * uniforms = (Uniforms*)_uniformBufferAddress;
+    Uniforms* uniforms = (Uniforms*)_uniformBufferAddress;
 
     uniforms->projectionMatrix = _camera.projMat;
-
-    vector_float3 rotationAxis = {1, 1, 0};
-    matrix_float4x4 modelMatrix = matrix4x4_rotation(_rotation, rotationAxis);
-    matrix_float4x4 viewMatrix = _camera.viewMat;
-    uniforms->modelViewMatrix = matrix_multiply(viewMatrix, modelMatrix);
-
-    _rotation += .01;
+    uniforms->viewMatrix = _camera.viewMat;
+    uniforms->viewProjectionMatrix = _camera.viewProjMat;
 }
 
 - (void)drawInMTKView:(nonnull MTKView *)view
@@ -253,10 +277,11 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     if(renderPassDescriptor != nil) {
 
         /// Final pass rendering code here
+        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0.6f, 0.7f, 0.9f, 1.0f);
 
         id <MTLRenderCommandEncoder> renderEncoder =
         [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
-        renderEncoder.label = @"MyRenderEncoder";
+        renderEncoder.label = @"FinalRenderEncoder";
 
         [renderEncoder pushDebugGroup:@"DrawBox"];
 
@@ -273,9 +298,9 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
                                   offset:_uniformBufferOffset
                                  atIndex:BufferIndexUniforms];
 
-        for (NSUInteger bufferIndex = 0; bufferIndex < _mesh.vertexBuffers.count; bufferIndex++)
+        for (NSUInteger bufferIndex = 0; bufferIndex < _testMesh.vertexBuffers.count; bufferIndex++)
         {
-            MTKMeshBuffer *vertexBuffer = _mesh.vertexBuffers[bufferIndex];
+            MeshBuffer *vertexBuffer = _testMesh.vertexBuffers[bufferIndex];
             if((NSNull*)vertexBuffer != [NSNull null])
             {
                 [renderEncoder setVertexBuffer:vertexBuffer.buffer
@@ -284,10 +309,10 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
             }
         }
 
-        [renderEncoder setFragmentTexture:_colorMap
-                                  atIndex:TextureIndexColor];
+        // [renderEncoder setFragmentTexture:_colorMap
+        //                           atIndex:TextureIndexColor];
 
-        for(MTKSubmesh *submesh in _mesh.submeshes)
+        for(Submesh *submesh in _testMesh.submeshes)
         {
             [renderEncoder drawIndexedPrimitives:submesh.primitiveType
                                       indexCount:submesh.indexCount
@@ -334,48 +359,6 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 
 - (void)onKeyUp:(unsigned short)keyCode {
     [_camera onKeyUp:keyCode];
-}
-
-#pragma mark Matrix Math Utilities
-
-matrix_float4x4 matrix4x4_translation(float tx, float ty, float tz)
-{
-    return (matrix_float4x4) {{
-        { 1,   0,  0,  0 },
-        { 0,   1,  0,  0 },
-        { 0,   0,  1,  0 },
-        { tx, ty, tz,  1 }
-    }};
-}
-
-static matrix_float4x4 matrix4x4_rotation(float radians, vector_float3 axis)
-{
-    axis = vector_normalize(axis);
-    float ct = cosf(radians);
-    float st = sinf(radians);
-    float ci = 1 - ct;
-    float x = axis.x, y = axis.y, z = axis.z;
-
-    return (matrix_float4x4) {{
-        { ct + x * x * ci,     y * x * ci + z * st, z * x * ci - y * st, 0},
-        { x * y * ci - z * st,     ct + y * y * ci, z * y * ci + x * st, 0},
-        { x * z * ci + y * st, y * z * ci - x * st,     ct + z * z * ci, 0},
-        {                   0,                   0,                   0, 1}
-    }};
-}
-
-matrix_float4x4 matrix_perspective_right_hand(float fovyRadians, float aspect, float nearZ, float farZ)
-{
-    float ys = 1 / tanf(fovyRadians * 0.5);
-    float xs = ys / aspect;
-    float zs = farZ / (nearZ - farZ);
-
-    return (matrix_float4x4) {{
-        { xs,   0,          0,  0 },
-        {  0,  ys,          0,  0 },
-        {  0,   0,         zs, -1 },
-        {  0,   0, nearZ * zs,  0 }
-    }};
 }
 
 @end

@@ -1,0 +1,40 @@
+on:
+  push:
+    branches:
+      # trigger on the main branch only for now
+      - main
+    paths:
+      # only run tests when src code/configuration has changed
+      - '**.h'
+      - '**.hpp'
+      - '**.c'
+      - '**.cpp'
+      - '**.m'
+      - '**.mm'
+      - 'RayTracing.xcodeproj/**'
+jobs:
+  build:
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - macos-11
+        xcode:
+          - ^12
+          - ^13
+        configuration:
+          - Debug
+          - Release
+        include:
+          - configuration: Debug
+            code-coverage: true
+          - configuration: Release
+            code-coverage: false
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: mxcl/xcodebuild@v2.0.0
+        with:
+          xcode: ${{ matrix.xcode }}
+          platform: macOS
+          action: test
+          configuration: ${{ matrix.configuration }}
