@@ -4,13 +4,14 @@ on:
       # trigger on the main branch only for now
       - master
     paths:
-      # only run tests when src code/configuration has changed
+      # only run tests when src code/configuration/this file has changed
       - '**.h'
       - '**.hpp'
       - '**.c'
       - '**.cpp'
       - '**.m'
       - '**.mm'
+      - '**xcode-tests.yml'
       - 'RayTracing.xcodeproj/**'
 jobs:
   build:
