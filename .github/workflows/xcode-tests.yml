@@ -22,11 +22,11 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-11
-          # - macos-latest
-        xcode:
-          - ^12
-          - ^13
+          # - macos-11
+          - macos-latest
+        # xcode:
+        #   - ^12
+        #   - ^13
         configuration:
           - Debug
             # - Release
@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: mxcl/xcodebuild@v2.0.0
         with:
-          xcode: ${{ matrix.xcode }}
+          # xcode: ${{ matrix.xcode }}
           configuration: ${{ matrix.configuration }}
           platform: macOS
           action: test
