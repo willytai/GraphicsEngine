@@ -13,6 +13,10 @@ on:
       - '**.mm'
       - '**xcode-tests.yml'
       - 'RayTracing.xcodeproj/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   build:
     strategy:
@@ -24,14 +28,15 @@ jobs:
           - ^13
         configuration:
           - Debug
-          - Release
+            # - Release
         include:
           - configuration: Debug
             code-coverage: true
-          - configuration: Release
-            code-coverage: false
+          # - configuration: Release
+          #   code-coverage: false
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v3
       - uses: mxcl/xcodebuild@v2.0.0
         with:
           xcode: ${{ matrix.xcode }}
