@@ -23,6 +23,7 @@ jobs:
       matrix:
         os:
           - macos-11
+          - macos-latest
         xcode:
           - ^12
           - ^13
