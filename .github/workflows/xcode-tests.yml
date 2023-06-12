@@ -43,12 +43,12 @@ jobs:
 
       - name: Build & Test
         uses: mxcl/xcodebuild@v2.0.0
-          with:
-            action: test
-            platform: macOS
-            workspace: RayTracing.xcodeproj/project.xcworkspace
-            scheme: RayTracing
-            # xcode: ${{ matrix.xcode }}
-            configuration: ${{ matrix.configuration }}
-            code-sign-certificate: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-            code-sign-certificate-passphrase: ${{ secrets.BUILD_CERTIFICATE_PASSPHRASE }}
+        with:
+          action: test
+          platform: macOS
+          workspace: RayTracing.xcodeproj/project.xcworkspace
+          scheme: RayTracing
+          # xcode: ${{ matrix.xcode }}
+          configuration: ${{ matrix.configuration }}
+          code-sign-certificate: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          code-sign-certificate-passphrase: ${{ secrets.BUILD_CERTIFICATE_PASSPHRASE }}
