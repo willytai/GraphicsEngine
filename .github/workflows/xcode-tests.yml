@@ -46,3 +46,5 @@ jobs:
           action: test
           workspace: RayTracing.xcodeproj/project.xcworkspace
           scheme: RayTracing
+          code-sign-certificate: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          code-sign-certificate-passphrase: ${{ secrets.BUILD_CERTIFICATE_PASSPHRASE }}
