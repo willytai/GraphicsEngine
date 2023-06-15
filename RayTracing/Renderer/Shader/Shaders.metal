@@ -29,7 +29,6 @@ vertex ColorInOut vertexShader(Vertex in [[stage_in]], constant Uniforms & unifo
     out.position =  position;
     // out.position = position * uniforms.viewMatrix * uniforms.projectionMatrix;
     out.position = position * uniforms.viewProjectionMatrix;
-    out.position /= out.position.w;
     out.texCoord = float2(0.0f, 0.0f);
     // out.texCoord = in.texCoord;
 

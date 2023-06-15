@@ -168,7 +168,7 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 
     BufferDataAllocator* bufferDataAllocator = [[BufferDataAllocator alloc] initWithDevice:_device];
     _testMesh = [Mesh newCubeWithDimensionX:5.0f Y:1.0f Z:10.0f Allocator:bufferDataAllocator];
-    _testMesh = [Mesh newIcosphereWithSubdivisions:0
+    _testMesh = [Mesh newIcosphereWithSubdivisions:3
                                          Allocator:bufferDataAllocator];
     
 

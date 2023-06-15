@@ -95,6 +95,12 @@ simd_float4x4 view(simd_float3 eye, simd_float3 center, simd_float3 up);
 /// length of vectors
 float length(simd_float3 float3);
 
+/// normalization
+simd_float3 normalize(simd_float3 float3);
+
+/// other utilities
+bool fequal(float x, float y);
+
 }
 
 #endif /* Math_hpp */

@@ -8,6 +8,8 @@
 #include "Math.hpp"
 #include "Logger.hpp"
 
+#define EPSILON 1e-6
+
 
 namespace mathutil {
 
@@ -92,6 +94,16 @@ simd_float4x4 view(simd_float3 eye, simd_float3 center, simd_float3 up) {
 
 float length(simd_float3 float3) {
     return simd_length(float3);
+}
+
+simd_float3 normalize(simd_float3 float3) {
+    return simd_normalize(float3);
+}
+
+#pragma mark Other Utils
+
+bool fequal(float x, float y) {
+    return std::fabs(x - y) < EPSILON;
 }
 
 

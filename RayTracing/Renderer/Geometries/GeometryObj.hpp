@@ -24,7 +24,9 @@ enum class GeometryIndexType : uint8_t
 ///    is set to counter-clockwise, make sure the indices are also generated this way.
 class GeometryObj
 {
+protected:
     using RawIndexType = uint16_t;
+
 public:
     GeometryObj() = default;
     virtual ~GeometryObj() = default;
