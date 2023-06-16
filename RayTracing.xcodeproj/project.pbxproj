@@ -93,6 +93,7 @@
 		59940D752A29979400D260EA /* VertexType.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexType.hpp; sourceTree = "<group>"; };
 		59940D782A2D4C8400D260EA /* Cube.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cube.cpp; sourceTree = "<group>"; };
 		59940D792A2D4C8400D260EA /* Cube.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cube.hpp; sourceTree = "<group>"; };
+		59E88F972A3C131500E5D23B /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +156,7 @@
 				593D7BE22A0AE9EE009424AE /* Logger.hpp */,
 				59940D642A2138A200D260EA /* Common.hpp */,
 				59940D742A2996A400D260EA /* Convert2Metal.h */,
+				59E88F972A3C131500E5D23B /* Logger.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

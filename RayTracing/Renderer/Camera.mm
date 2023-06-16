@@ -9,9 +9,12 @@
 #import "Camera.h"
 #import "Geometries/Coordinates.hpp"
 #import "../App/InputCodes.h"
-#import "../Utils/Math.hpp"
+#import "../Utils/Logger.h"
 #import "../Utils/Logger.hpp"
+#import "../Utils/Math.hpp"
 
+
+static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Camera");
 
 #pragma mark Constants
 /// the cutoff distance to the focal point for zooming
@@ -160,7 +163,7 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
             break;
         }
         default:
-            NSLog(@"keycode: %u unrecognized.", keyCode);
+            LOG_ERROR(LOGGER, "@%s, keycode: %u unrecognized.", __PRETTY_FUNCTION__, keyCode);
             break;
     }
 }
@@ -198,7 +201,7 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
             break;
         }
         default:
-            NSLog(@"keycode: %u unrecognized.", keyCode);
+            LOG_ERROR(LOGGER, "@%s, keycode: %u unrecognized.", __PRETTY_FUNCTION__, keyCode);
             break;
     }
 }

@@ -14,13 +14,17 @@
 #import "Camera.h"
 #import "Geometries/Cube.hpp"
 #import "Shader/ShaderTypes.h"
-#import "../Utils/Timer.hpp"
+#import "../Utils/Logger.h"
 #import "../Utils/Logger.hpp"
 #import "../Utils/Math.hpp"
+#import "../Utils/Timer.hpp"
 
 static const NSUInteger kMaxBuffersInFlight = 3;
 
 static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
+
+static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Renderer");
+
 
 @interface Renderer()
 
@@ -117,7 +121,10 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     _pipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error];
     if (!_pipelineState)
     {
-        NSLog(@"Failed to created pipeline state, error %@", error);
+        LOG_ERROR(LOGGER, "Failed to created pipeline state, error %@", error);
+    }
+    else {
+        LOG_INFO(LOGGER, "Pipeline state successfully screated");
     }
 
     MTLDepthStencilDescriptor* depthStateDesc = [[MTLDepthStencilDescriptor alloc] init];
