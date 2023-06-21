@@ -12,7 +12,7 @@
 		593D7BDD2A0AC592009424AE /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BDB2A0AC592009424AE /* Math.cpp */; };
 		593D7BE02A0ACDDF009424AE /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BDE2A0ACDDF009424AE /* Timer.cpp */; };
 		593D7BE32A0AE9EE009424AE /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BE12A0AE9EE009424AE /* Logger.cpp */; };
-		594AE83B2A00BF1700830026 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83A2A00BF1700830026 /* AppDelegate.m */; };
+		594AE83B2A00BF1700830026 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83A2A00BF1700830026 /* AppDelegate.mm */; };
 		594AE83E2A00BF1700830026 /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 594AE83D2A00BF1700830026 /* Renderer.mm */; };
 		594AE8412A00BF1700830026 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 594AE8402A00BF1700830026 /* GameViewController.m */; };
 		594AE8432A00BF1700830026 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 594AE8422A00BF1700830026 /* Shaders.metal */; };
@@ -22,7 +22,7 @@
 		5957C8A92A35177D00416BBA /* Coordinates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5957C8A72A35177D00416BBA /* Coordinates.cpp */; };
 		5957C8AB2A35286900416BBA /* GeometriesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5957C8AA2A35286900416BBA /* GeometriesTests.mm */; };
 		5957C8B12A353A2100416BBA /* RendererTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5957C8B02A353A2100416BBA /* RendererTests.mm */; };
-		59940D4F2A0C0FA200D260EA /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 59940D4E2A0C0FA200D260EA /* MyWindow.m */; };
+		59940D4F2A0C0FA200D260EA /* MainWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D4E2A0C0FA200D260EA /* MainWindow.mm */; };
 		59940D532A19DDB500D260EA /* Submesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D522A19DDB500D260EA /* Submesh.mm */; };
 		59940D562A19DF7F00D260EA /* MeshBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D552A19DF7F00D260EA /* MeshBuffer.mm */; };
 		59940D592A19E09100D260EA /* Mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59940D582A19E09100D260EA /* Mesh.mm */; };
@@ -56,7 +56,7 @@
 		593D7BE42A0BFBF2009424AE /* EventCallbacks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventCallbacks.h; sourceTree = "<group>"; };
 		594AE8362A00BF1700830026 /* RayTracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RayTracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		594AE8392A00BF1700830026 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		594AE83A2A00BF1700830026 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		594AE83A2A00BF1700830026 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		594AE83C2A00BF1700830026 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		594AE83D2A00BF1700830026 /* Renderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Renderer.mm; sourceTree = "<group>"; };
 		594AE83F2A00BF1700830026 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
@@ -72,8 +72,8 @@
 		5957C8AA2A35286900416BBA /* GeometriesTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GeometriesTests.mm; sourceTree = "<group>"; };
 		5957C8AD2A352B1A00416BBA /* CompareUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CompareUtils.hpp; sourceTree = "<group>"; };
 		5957C8B02A353A2100416BBA /* RendererTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RendererTests.mm; sourceTree = "<group>"; };
-		59940D4D2A0C0FA200D260EA /* MyWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
-		59940D4E2A0C0FA200D260EA /* MyWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
+		59940D4D2A0C0FA200D260EA /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
+		59940D4E2A0C0FA200D260EA /* MainWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainWindow.mm; sourceTree = "<group>"; };
 		59940D502A0C12F400D260EA /* InputCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputCodes.h; sourceTree = "<group>"; };
 		59940D512A19DDB500D260EA /* Submesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Submesh.h; sourceTree = "<group>"; };
 		59940D522A19DDB500D260EA /* Submesh.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Submesh.mm; sourceTree = "<group>"; };
@@ -132,14 +132,14 @@
 			isa = PBXGroup;
 			children = (
 				594AE8392A00BF1700830026 /* AppDelegate.h */,
-				594AE83A2A00BF1700830026 /* AppDelegate.m */,
+				594AE83A2A00BF1700830026 /* AppDelegate.mm */,
 				594AE83F2A00BF1700830026 /* GameViewController.h */,
 				594AE8402A00BF1700830026 /* GameViewController.m */,
 				593D7BCE2A030F7A009424AE /* MyView.h */,
 				593D7BCF2A030F7A009424AE /* MyView.m */,
 				593D7BE42A0BFBF2009424AE /* EventCallbacks.h */,
-				59940D4D2A0C0FA200D260EA /* MyWindow.h */,
-				59940D4E2A0C0FA200D260EA /* MyWindow.m */,
+				59940D4D2A0C0FA200D260EA /* MainWindow.h */,
+				59940D4E2A0C0FA200D260EA /* MainWindow.mm */,
 				59940D502A0C12F400D260EA /* InputCodes.h */,
 			);
 			path = App;
@@ -288,7 +288,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					594AE8352A00BF1700830026 = {
 						CreatedOnToolsVersion = 14.2;
@@ -344,7 +344,7 @@
 			files = (
 				59940D7A2A2D4C8400D260EA /* Cube.cpp in Sources */,
 				59940D602A21355500D260EA /* Icosphere.cpp in Sources */,
-				59940D4F2A0C0FA200D260EA /* MyWindow.m in Sources */,
+				59940D4F2A0C0FA200D260EA /* MainWindow.mm in Sources */,
 				5957C8A92A35177D00416BBA /* Coordinates.cpp in Sources */,
 				593D7BD32A035017009424AE /* Camera.mm in Sources */,
 				59940D5C2A1DCE0100D260EA /* BufferDataAllocator.mm in Sources */,
@@ -358,7 +358,7 @@
 				593D7BE02A0ACDDF009424AE /* Timer.cpp in Sources */,
 				594AE8412A00BF1700830026 /* GameViewController.m in Sources */,
 				59940D562A19DF7F00D260EA /* MeshBuffer.mm in Sources */,
-				594AE83B2A00BF1700830026 /* AppDelegate.m in Sources */,
+				594AE83B2A00BF1700830026 /* AppDelegate.mm in Sources */,
 				59940D532A19DDB500D260EA /* Submesh.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +430,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 7Q7U822RR6;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -492,6 +493,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7Q7U822RR6;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -522,6 +524,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7Q7U822RR6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -551,6 +554,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7Q7U822RR6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -576,6 +580,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7Q7U822RR6;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -600,6 +605,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7Q7U822RR6;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;

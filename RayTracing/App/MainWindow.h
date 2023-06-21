@@ -1,5 +1,5 @@
 //
-//  MyWindow.h
+//  MainWindow.h
 //  RayTracing
 //
 //  Created by Willy Tai on 5/10/23.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MyWindow : NSWindow
+@interface MainWindow : NSWindow
 
 @end
 

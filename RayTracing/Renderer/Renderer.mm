@@ -81,7 +81,8 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
 
 #pragma mark Setup and Load
 
-- (void)_initCamera {
+- (void)_initCamera
+{
     CameraParams cameraParams;
     cameraParams.fov = 45.0f; // in degrees
     cameraParams.width = 1280.0f;
@@ -89,17 +90,19 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     cameraParams.nearClip = 0.1f;
     cameraParams.farClip = 1000.0f;
     _camera = [[Camera alloc] initWithParams:cameraParams];
+
+    LOG_INFO(LOGGER, "Camera initialized");
 }
 
 - (void)_loadMetalWithView:(nonnull MTKView *)view;
 {
     /// Load Metal state objects and initialize renderer dependent view properties
 
+    [self _initVertexDescriptor];
+
     view.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
     view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB;
     view.sampleCount = 1;
-
-    [self _initVertexDescriptor];
 
     id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
 
@@ -124,25 +127,45 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
         LOG_ERROR(LOGGER, "Failed to created pipeline state, error %@", error);
     }
     else {
-        LOG_INFO(LOGGER, "Pipeline state successfully screated");
+        LOG_INFO(LOGGER, "Pipeline state successfully created");
     }
 
     MTLDepthStencilDescriptor* depthStateDesc = [[MTLDepthStencilDescriptor alloc] init];
     depthStateDesc.depthCompareFunction = MTLCompareFunctionLess;
     depthStateDesc.depthWriteEnabled = YES;
     _depthState = [_device newDepthStencilStateWithDescriptor:depthStateDesc];
+    if (!_depthState)
+    {
+        LOG_ERROR(LOGGER, "Failed to created depth/stencil state");
+    }
+    else {
+        LOG_INFO(LOGGER, "Depth/Stencil state successfully created");
+    }
 
     NSUInteger uniformBufferSize = kAlignedUniformsSize * kMaxBuffersInFlight;
-
     _dynamicUniformBuffer = [_device newBufferWithLength:uniformBufferSize
                                                  options:MTLResourceStorageModeShared];
-
-    _dynamicUniformBuffer.label = @"UniformBuffer";
+    if (!_dynamicUniformBuffer)
+    {
+        LOG_ERROR(LOGGER, "Failed to created uniform buffer");
+    }
+    else {
+        LOG_INFO(LOGGER, "Uniform buffer successfully created");
+        _dynamicUniformBuffer.label = @"UniformBuffer";
+    }
 
     _commandQueue = [_device newCommandQueue];
+    if (!_commandQueue)
+    {
+        LOG_ERROR(LOGGER, "Failed to created command queue");
+    }
+    else {
+        LOG_INFO(LOGGER, "Command queue successfully created");
+    }
 }
 
-- (void)_initVertexDescriptor {
+- (void)_initVertexDescriptor
+{
     _mtlVertexDescriptor = [[MTLVertexDescriptor alloc] init];
 
     _mtlVertexDescriptor.attributes[VertexAttributePosition].format = MTLVertexFormatFloat3;
@@ -168,6 +191,8 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stride = sizeof(VtxMaterialIDType);
     _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepRate = 1;
     _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepFunction = MTLVertexStepFunctionPerVertex;
+
+    LOG_INFO(LOGGER, "Vertex descriptor initialized");
 }
 
 - (void)_loadAssets
@@ -178,6 +203,7 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     _testMesh = [Mesh newIcosphereWithSubdivisions:3
                                          Allocator:bufferDataAllocator];
     
+    LOG_INFO(LOGGER, "Asset loaded");
 
     /// Load assets into metal objects
 
@@ -346,25 +372,30 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
 
 #pragma mark Event Callbacks
 
-- (void)onScrolled:(float)deltaY {
+- (void)onScrolled:(float)deltaY
+{
     [_camera onScrolled:deltaY];
 }
 
-- (void)onMouseDown:(MouseButton)button {
+- (void)onMouseDown:(MouseButton)button
+{
     if (button == MouseButton::Left)
         [_camera onLeftMouseDown];
 }
 
-- (void)onMouseUp {
+- (void)onMouseUp
+{
     [_camera onLeftMouseUp];
 }
 
 - (void)onKeyDown:(unsigned short)keyCode
-     WithModifier:(NSUInteger)modifierFlags {
+     WithModifier:(NSUInteger)modifierFlags
+{
     [_camera onKeyDown:keyCode];
 }
 
-- (void)onKeyUp:(unsigned short)keyCode {
+- (void)onKeyUp:(unsigned short)keyCode
+{
     [_camera onKeyUp:keyCode];
 }
 
