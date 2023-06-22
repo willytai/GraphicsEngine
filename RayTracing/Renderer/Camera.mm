@@ -14,8 +14,6 @@
 #import "../Utils/Math.hpp"
 
 
-static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Camera");
-
 #pragma mark Constants
 /// the cutoff distance to the focal point for zooming
 const float MINDIST = 3.0f;
@@ -60,6 +58,7 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
     /// we are only interested in 'w', 'a', 's', 'd'
     KeyDownFlags _keyDownFlags;
 }
+GEN_CLASS_LOGGER("renderer.raytracing.graphicsengine", "camera")
 
 - (nonnull instancetype)initWithParams:(CameraParams)params {
     if (self = [super init]) {
@@ -163,7 +162,7 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
             break;
         }
         default:
-            LOG_ERROR(LOGGER, "@%s, keycode: %u unrecognized.", __PRETTY_FUNCTION__, keyCode);
+            LOG_ERROR("@%s, keycode: %u unrecognized.", __PRETTY_FUNCTION__, keyCode);
             break;
     }
 }
@@ -201,7 +200,7 @@ typedef NS_OPTIONS(unsigned short, KeyDownFlags) {
             break;
         }
         default:
-            LOG_ERROR(LOGGER, "@%s, keycode: %u unrecognized.", __PRETTY_FUNCTION__, keyCode);
+            LOG_ERROR("@%s, keycode: %u unrecognized.", __PRETTY_FUNCTION__, keyCode);
             break;
     }
 }

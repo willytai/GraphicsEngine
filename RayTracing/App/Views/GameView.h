@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Simply overwrites the 'acceptFirstResponder' in MTKView to Yes
 // so that key events can propagate.
-@interface MyView : MTKView
+@interface GameView : MTKView
 
 @end
 

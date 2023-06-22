@@ -9,14 +9,12 @@
 #import "../Utils/Logger.h"
 
 
-static os_log_t LOGGER = os_log_create("App.RayTracing.GraphicsEngine", "AppDelegate");
-
-
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
+GEN_CLASS_LOGGER("App.RayTracing.GraphicsEngine", "AppDelegate")
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification {
     // Insert code here to initialize your application
@@ -33,7 +31,7 @@ static os_log_t LOGGER = os_log_create("App.RayTracing.GraphicsEngine", "AppDele
 - (IBAction)toggleStatusWindow:(NSMenuItem*)sender {
     // If the state is off and the item is clicked, we want to toggle it on
     bool showWindow = sender.state == NSControlStateValueOff;
-    LOG_INFO(LOGGER, "%s status window", showWindow ? "Showing" : "Closing");
+    LOG_INFO("%s status window", showWindow ? "Showing" : "Closing");
 
     // TODO show window
     //      don't know how to send signals to game view controller

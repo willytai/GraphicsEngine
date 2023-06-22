@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		593D7BD02A030F7A009424AE /* MyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BCF2A030F7A009424AE /* MyView.m */; };
+		591989862A42A9F600CDC3D5 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 591989852A42A9F600CDC3D5 /* WindowController.m */; };
+		591989892A42AA4500CDC3D5 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 591989882A42AA4500CDC3D5 /* SplitViewController.m */; };
+		5919898C2A42AC6400CDC3D5 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5919898B2A42AC6400CDC3D5 /* SummaryViewController.m */; };
+		5919898F2A42AC8900CDC3D5 /* SummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5919898E2A42AC8900CDC3D5 /* SummaryView.m */; };
+		593D7BD02A030F7A009424AE /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BCF2A030F7A009424AE /* GameView.m */; };
 		593D7BD32A035017009424AE /* Camera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BD22A035017009424AE /* Camera.mm */; };
 		593D7BDD2A0AC592009424AE /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BDB2A0AC592009424AE /* Math.cpp */; };
 		593D7BE02A0ACDDF009424AE /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BDE2A0ACDDF009424AE /* Timer.cpp */; };
@@ -43,8 +47,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		593D7BCE2A030F7A009424AE /* MyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyView.h; sourceTree = "<group>"; };
-		593D7BCF2A030F7A009424AE /* MyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyView.m; sourceTree = "<group>"; };
+		591989842A42A9F600CDC3D5 /* WindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindowController.h; sourceTree = "<group>"; };
+		591989852A42A9F600CDC3D5 /* WindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WindowController.m; sourceTree = "<group>"; };
+		591989872A42AA4500CDC3D5 /* SplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplitViewController.h; sourceTree = "<group>"; };
+		591989882A42AA4500CDC3D5 /* SplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
+		5919898A2A42AC6400CDC3D5 /* SummaryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SummaryViewController.h; sourceTree = "<group>"; };
+		5919898B2A42AC6400CDC3D5 /* SummaryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SummaryViewController.m; sourceTree = "<group>"; };
+		5919898D2A42AC8900CDC3D5 /* SummaryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SummaryView.h; sourceTree = "<group>"; };
+		5919898E2A42AC8900CDC3D5 /* SummaryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SummaryView.m; sourceTree = "<group>"; };
+		593B32BC2A43DBFE00830DD2 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		593D7BCE2A030F7A009424AE /* GameView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameView.h; sourceTree = "<group>"; };
+		593D7BCF2A030F7A009424AE /* GameView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameView.m; sourceTree = "<group>"; };
 		593D7BD12A035017009424AE /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		593D7BD22A035017009424AE /* Camera.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Camera.mm; sourceTree = "<group>"; };
 		593D7BDB2A0AC592009424AE /* Math.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Math.cpp; sourceTree = "<group>"; };
@@ -114,6 +127,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		591989822A42A8C900CDC3D5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				594AE83F2A00BF1700830026 /* GameViewController.h */,
+				594AE8402A00BF1700830026 /* GameViewController.m */,
+				591989842A42A9F600CDC3D5 /* WindowController.h */,
+				591989852A42A9F600CDC3D5 /* WindowController.m */,
+				591989872A42AA4500CDC3D5 /* SplitViewController.h */,
+				591989882A42AA4500CDC3D5 /* SplitViewController.m */,
+				5919898A2A42AC6400CDC3D5 /* SummaryViewController.h */,
+				5919898B2A42AC6400CDC3D5 /* SummaryViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		591989832A42A8E300CDC3D5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				593D7BCE2A030F7A009424AE /* GameView.h */,
+				593D7BCF2A030F7A009424AE /* GameView.m */,
+				5919898D2A42AC8900CDC3D5 /* SummaryView.h */,
+				5919898E2A42AC8900CDC3D5 /* SummaryView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		593D7BC42A017889009424AE /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,16 +170,15 @@
 		593D7BC52A017892009424AE /* App */ = {
 			isa = PBXGroup;
 			children = (
+				591989832A42A8E300CDC3D5 /* Views */,
+				591989822A42A8C900CDC3D5 /* Controllers */,
 				594AE8392A00BF1700830026 /* AppDelegate.h */,
 				594AE83A2A00BF1700830026 /* AppDelegate.mm */,
-				594AE83F2A00BF1700830026 /* GameViewController.h */,
-				594AE8402A00BF1700830026 /* GameViewController.m */,
-				593D7BCE2A030F7A009424AE /* MyView.h */,
-				593D7BCF2A030F7A009424AE /* MyView.m */,
 				593D7BE42A0BFBF2009424AE /* EventCallbacks.h */,
 				59940D4D2A0C0FA200D260EA /* MainWindow.h */,
 				59940D4E2A0C0FA200D260EA /* MainWindow.mm */,
 				59940D502A0C12F400D260EA /* InputCodes.h */,
+				593B32BC2A43DBFE00830DD2 /* Notification.h */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -342,24 +380,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				591989862A42A9F600CDC3D5 /* WindowController.m in Sources */,
 				59940D7A2A2D4C8400D260EA /* Cube.cpp in Sources */,
 				59940D602A21355500D260EA /* Icosphere.cpp in Sources */,
 				59940D4F2A0C0FA200D260EA /* MainWindow.mm in Sources */,
 				5957C8A92A35177D00416BBA /* Coordinates.cpp in Sources */,
 				593D7BD32A035017009424AE /* Camera.mm in Sources */,
 				59940D5C2A1DCE0100D260EA /* BufferDataAllocator.mm in Sources */,
+				591989892A42AA4500CDC3D5 /* SplitViewController.m in Sources */,
 				593D7BE32A0AE9EE009424AE /* Logger.cpp in Sources */,
 				594AE84B2A00BF1800830026 /* main.m in Sources */,
 				594AE8432A00BF1700830026 /* Shaders.metal in Sources */,
 				593D7BDD2A0AC592009424AE /* Math.cpp in Sources */,
 				59940D592A19E09100D260EA /* Mesh.mm in Sources */,
-				593D7BD02A030F7A009424AE /* MyView.m in Sources */,
+				593D7BD02A030F7A009424AE /* GameView.m in Sources */,
 				594AE83E2A00BF1700830026 /* Renderer.mm in Sources */,
 				593D7BE02A0ACDDF009424AE /* Timer.cpp in Sources */,
 				594AE8412A00BF1700830026 /* GameViewController.m in Sources */,
+				5919898F2A42AC8900CDC3D5 /* SummaryView.m in Sources */,
 				59940D562A19DF7F00D260EA /* MeshBuffer.mm in Sources */,
 				594AE83B2A00BF1700830026 /* AppDelegate.mm in Sources */,
 				59940D532A19DDB500D260EA /* Submesh.mm in Sources */,
+				5919898C2A42AC6400CDC3D5 /* SummaryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

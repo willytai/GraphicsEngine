@@ -5,9 +5,9 @@
 //  Created by Willy Tai on 5/3/23.
 //
 
-#import "MyView.h"
+#import "GameView.h"
 
-@implementation MyView
+@implementation GameView
 
 - (BOOL)acceptsFirstResponder {
     return YES;

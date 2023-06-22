@@ -697,7 +697,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="WindowController" sceneMemberID="viewController">
                     <window key="window" title="RayTracing" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="MainWindow">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -708,25 +708,72 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
+                        <segue destination="j5D-ZR-RPE" kind="relationship" relationship="window.shadowedContentViewController" id="xHs-Gw-SKJ"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--Game View Controller-->
-        <scene sceneID="hIz-AP-VOD">
+        <!--Split View Controller-->
+        <scene sceneID="Jzt-Jp-gDf">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="GameViewController" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl" customClass="MyView">
-                        <rect key="frame" x="0.0" y="0.0" width="960" height="720"/>
+                <splitViewController id="j5D-ZR-RPE" customClass="SplitViewController" sceneMemberID="viewController">
+                    <splitViewItems>
+                        <splitViewItem id="zHf-oI-kCH"/>
+                        <splitViewItem id="zav-B9-WDP"/>
+                    </splitViewItems>
+                    <splitView key="splitView" dividerStyle="thin" vertical="YES" id="Xu8-gh-c1o">
+                        <rect key="frame" x="-138" y="0.0" width="588" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <outlet property="delegate" destination="j5D-ZR-RPE" id="ITF-fE-wEO"/>
+                        </connections>
+                    </splitView>
+                    <connections>
+                        <outlet property="splitView" destination="Xu8-gh-c1o" id="gsq-3s-NUS"/>
+                        <segue destination="N8B-i2-pER" kind="relationship" relationship="splitItems" id="mDX-fI-xHB"/>
+                        <segue destination="Vvk-8h-7ey" kind="relationship" relationship="splitItems" id="OaV-Sl-fzM"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="Mbd-1m-MEW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75" y="691"/>
+        </scene>
+        <!--Summary View Controller-->
+        <scene sceneID="CXg-sB-WNG">
+            <objects>
+                <viewController id="N8B-i2-pER" customClass="SummaryViewController" sceneMemberID="viewController">
+                    <view key="view" wantsLayer="YES" id="1fB-kt-ENp" customClass="SummaryView">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="640"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="cRR-vM-Hw1">
+                                <rect key="frame" x="-2" y="616" width="42" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <action selector="switchSwitchedAction:" target="N8B-i2-pER" id="XDA-hW-tDG"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="EMg-sD-eBL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-260" y="1381"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="gXN-F4-afY">
+            <objects>
+                <viewController id="Vvk-8h-7ey" customClass="GameViewController" sceneMemberID="viewController">
+                    <view key="view" id="E2Q-pX-Y19" customClass="GameView">
+                        <rect key="frame" x="0.0" y="0.0" width="720" height="640"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="AsD-bx-55O" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="958"/>
+            <point key="canvasLocation" x="399" y="1381"/>
         </scene>
     </scenes>
 </document>

@@ -10,9 +10,20 @@
 
 #import <OSLog/OSLog.h>
 
-#define LOG_INFO(logger, format, ...)  os_log_info(logger, format, ##__VA_ARGS__)
-#define LOG_ERROR(logger, format, ...) os_log_error(logger, format, ##__VA_ARGS__)
-#define LOG_DEBUG(logger, format, ...) os_log_debug(logger, format, ##__VA_ARGS__)
+static os_log_t LOGGER = nil;
+
+#define GEN_CLASS_LOGGER(subsystem, category) \
+- (os_log_t)getLogger \
+{ \
+    if (LOGGER == nil) { \
+        LOGGER = os_log_create(subsystem, category); \
+    } \
+    return LOGGER; \
+}
+
+#define LOG_INFO(format, ...)  os_log_info([self getLogger], format, ##__VA_ARGS__)
+#define LOG_ERROR(format, ...) os_log_error([self getLogger], format, ##__VA_ARGS__)
+#define LOG_DEBUG(format, ...) os_log_debug([self getLogger], format, ##__VA_ARGS__)
 
 
 #endif /* Logger_h */

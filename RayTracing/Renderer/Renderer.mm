@@ -19,11 +19,10 @@
 #import "../Utils/Math.hpp"
 #import "../Utils/Timer.hpp"
 
+
 static const NSUInteger kMaxBuffersInFlight = 3;
 
 static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
-
-static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Renderer");
 
 
 @interface Renderer()
@@ -62,6 +61,7 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     Camera* _camera;
     Mesh*   _testMesh;
 }
+GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
 
 - (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
 {
@@ -91,7 +91,7 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     cameraParams.farClip = 1000.0f;
     _camera = [[Camera alloc] initWithParams:cameraParams];
 
-    LOG_INFO(LOGGER, "Camera initialized");
+    LOG_INFO("Camera initialized");
 }
 
 - (void)_loadMetalWithView:(nonnull MTKView *)view;
@@ -124,10 +124,10 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     _pipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error];
     if (!_pipelineState)
     {
-        LOG_ERROR(LOGGER, "Failed to created pipeline state, error %@", error);
+        LOG_ERROR("Failed to created pipeline state, error %@", error);
     }
     else {
-        LOG_INFO(LOGGER, "Pipeline state successfully created");
+        LOG_INFO("Pipeline state successfully created");
     }
 
     MTLDepthStencilDescriptor* depthStateDesc = [[MTLDepthStencilDescriptor alloc] init];
@@ -136,10 +136,10 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     _depthState = [_device newDepthStencilStateWithDescriptor:depthStateDesc];
     if (!_depthState)
     {
-        LOG_ERROR(LOGGER, "Failed to created depth/stencil state");
+        LOG_ERROR("Failed to created depth/stencil state");
     }
     else {
-        LOG_INFO(LOGGER, "Depth/Stencil state successfully created");
+        LOG_INFO("Depth/Stencil state successfully created");
     }
 
     NSUInteger uniformBufferSize = kAlignedUniformsSize * kMaxBuffersInFlight;
@@ -147,20 +147,20 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
                                                  options:MTLResourceStorageModeShared];
     if (!_dynamicUniformBuffer)
     {
-        LOG_ERROR(LOGGER, "Failed to created uniform buffer");
+        LOG_ERROR("Failed to created uniform buffer");
     }
     else {
-        LOG_INFO(LOGGER, "Uniform buffer successfully created");
+        LOG_INFO("Uniform buffer successfully created");
         _dynamicUniformBuffer.label = @"UniformBuffer";
     }
 
     _commandQueue = [_device newCommandQueue];
     if (!_commandQueue)
     {
-        LOG_ERROR(LOGGER, "Failed to created command queue");
+        LOG_ERROR("Failed to created command queue");
     }
     else {
-        LOG_INFO(LOGGER, "Command queue successfully created");
+        LOG_INFO("Command queue successfully created");
     }
 }
 
@@ -192,7 +192,7 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepRate = 1;
     _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepFunction = MTLVertexStepFunctionPerVertex;
 
-    LOG_INFO(LOGGER, "Vertex descriptor initialized");
+    LOG_INFO("Vertex descriptor initialized");
 }
 
 - (void)_loadAssets
@@ -203,7 +203,7 @@ static os_log_t LOGGER = os_log_create("Renderer.RayTracing.GraphicsEngine", "Re
     _testMesh = [Mesh newIcosphereWithSubdivisions:3
                                          Allocator:bufferDataAllocator];
     
-    LOG_INFO(LOGGER, "Asset loaded");
+    LOG_INFO("Asset loaded");
 
     /// Load assets into metal objects
 

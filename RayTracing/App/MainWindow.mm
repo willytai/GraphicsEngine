@@ -8,16 +8,16 @@
 #import "MainWindow.h"
 #import "../Utils/Logger.h"
 
-static os_log_t LOGGER = os_log_create("App.RayTracing.GraphicsEngine", "MainWindow");
 
 @implementation MainWindow
+GEN_CLASS_LOGGER("App.RayTracing.GraphicsEngine", "MainWindow")
 
 - (BOOL)acceptsMouseMovedEvents {
     return NO;
 }
 
 - (void)performClose:(id)sender {
-    LOG_INFO(LOGGER, "Closing main window...");
+    LOG_INFO("Closing main window...");
     [super performClose:sender];
 }
 
