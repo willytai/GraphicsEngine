@@ -9,9 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "../App/InputCodes.h"
 
+typedef NS_ENUM(NSInteger, RendererMode)
+{
+    RendererModeRayTracing,
+    RendererModeNormalRendering,
+
+    RendererModeUndefined,
+};
+
 // Our platform independent renderer class.   Implements the MTKViewDelegate protocol which
 //   allows it to accept per-frame update and drawable resize callbacks.
 @interface Renderer : NSObject <MTKViewDelegate>
+
+/// the rendering mode, currently supports ray tracing and normal rendering
+@property(nonatomic, readonly) RendererMode rendererMode;
 
 - (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
 
@@ -31,6 +42,13 @@
 
 /// key up event, calls the camera's 'onKeyUp'
 - (void)onKeyUp:(unsigned short)keyCode;
+
+/// setting requires checks
+- (void)setRendererMode:(RendererMode)rendererMode
+               WithView:(nonnull MTKView*)view;
+
+/// helper function to convert string to render mode
++ (RendererMode)getRendererModeFromString:(nonnull NSString*)mode;
 
 @end
 

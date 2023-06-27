@@ -24,14 +24,16 @@ typedef metal::int32_t  EnumBackingType;
 typedef NSInteger       EnumBackingType;
 #endif
 
+#include <simd/simd.h>
+
 #import "VertexType.hpp"
 
 
 typedef NS_ENUM(EnumBackingType, BufferIndex)
 {
-    BufferIndexMeshPositions  = 0,
-    BufferIndexMeshNormals    = 1,
-    BufferIndexMeshMaterialID = 2,
+    BufferIndexMeshPositions  = 1,
+    BufferIndexMeshNormals    = 2,
+    BufferIndexMeshMaterialID = 3,
 
     // Some helper macros.
     // This keeps track of how many vertex buffers
@@ -39,22 +41,26 @@ typedef NS_ENUM(EnumBackingType, BufferIndex)
     // Make sure to update the '__BufferIndexMax' when
     // a new vertex attribute is added.
     __BufferIndexMax = BufferIndexMeshMaterialID,
-    BufferIndexCount = __BufferIndexMax + 1,
+    BufferIndexCount = __BufferIndexMax,
     
-    BufferIndexUniforms = 3,
+    BufferIndexUniforms = 0,
     BufferIndexDontCare = -1,
 };
 
 typedef NS_ENUM(EnumBackingType, VertexAttribute)
 {
-    VertexAttributePosition   = BufferIndexMeshPositions,
-    VertexAttributeNormal     = BufferIndexMeshNormals,
-    VertexAttributeMaterialID = BufferIndexMeshMaterialID,
+    VertexAttributePosition   = BufferIndexMeshPositions - 1,
+    VertexAttributeNormal     = BufferIndexMeshNormals - 1,
+    VertexAttributeMaterialID = BufferIndexMeshMaterialID - 1,
 };
 
 typedef NS_ENUM(EnumBackingType, TextureIndex)
 {
-    TextureIndexColor    = 0,
+    // for rayTracingKernel
+    TextureIndexRayTracingKernelDestinationTarget = 0,
+
+    // for copy shader
+    TextureIndexCopyShaderDestinationTarget = 0,
 };
 
 typedef struct
@@ -69,6 +75,7 @@ typedef struct
     simd_float4x4 projectionMatrix;
     simd_float4x4 viewProjectionMatrix;
     simd_float4x4 viewMatrix;
+    unsigned int frameIndex;
 } Uniforms;
 
 
@@ -77,15 +84,10 @@ typedef struct
 
 #define MAX_SUPPORTED_VERTEX_COUNT 1e6
 
-static size_t sizeofAttribute(VertexAttribute attribute) {
-    switch (attribute) {
-        case VertexAttributePosition:   return sizeof(VtxPositionType);
-        case VertexAttributeNormal:     return sizeof(VtxNormalType);
-        case VertexAttributeMaterialID: return sizeof(VtxMaterialIDType);
-        default: printf("Undefined attribute size for attribute: %d, did you forget to add it here?\n", (int)attribute); assert(false);
-    }
-    return 0xffff;
-}
+#ifdef __cplusplus
+extern "C"
+#endif
+size_t sizeofAttribute(VertexAttribute attribute);
 
 #endif
 

@@ -11,6 +11,9 @@
 		591989892A42AA4500CDC3D5 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 591989882A42AA4500CDC3D5 /* SplitViewController.m */; };
 		5919898C2A42AC6400CDC3D5 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5919898B2A42AC6400CDC3D5 /* SummaryViewController.m */; };
 		5919898F2A42AC8900CDC3D5 /* SummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5919898E2A42AC8900CDC3D5 /* SummaryView.m */; };
+		593B32C02A463DCD00830DD2 /* ShaderTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 593B32BF2A463DCD00830DD2 /* ShaderTypes.m */; };
+		593B32C22A46407200830DD2 /* CopyShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 593B32C12A46407200830DD2 /* CopyShader.metal */; };
+		593B32C62A46C65100830DD2 /* RayTracingKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = 593B32C52A46C65100830DD2 /* RayTracingKernel.metal */; };
 		593D7BD02A030F7A009424AE /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BCF2A030F7A009424AE /* GameView.m */; };
 		593D7BD32A035017009424AE /* Camera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BD22A035017009424AE /* Camera.mm */; };
 		593D7BDD2A0AC592009424AE /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593D7BDB2A0AC592009424AE /* Math.cpp */; };
@@ -56,6 +59,9 @@
 		5919898D2A42AC8900CDC3D5 /* SummaryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SummaryView.h; sourceTree = "<group>"; };
 		5919898E2A42AC8900CDC3D5 /* SummaryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SummaryView.m; sourceTree = "<group>"; };
 		593B32BC2A43DBFE00830DD2 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		593B32BF2A463DCD00830DD2 /* ShaderTypes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShaderTypes.m; sourceTree = "<group>"; };
+		593B32C12A46407200830DD2 /* CopyShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CopyShader.metal; sourceTree = "<group>"; };
+		593B32C52A46C65100830DD2 /* RayTracingKernel.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RayTracingKernel.metal; sourceTree = "<group>"; };
 		593D7BCE2A030F7A009424AE /* GameView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameView.h; sourceTree = "<group>"; };
 		593D7BCF2A030F7A009424AE /* GameView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameView.m; sourceTree = "<group>"; };
 		593D7BD12A035017009424AE /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
@@ -262,6 +268,9 @@
 				594AE8422A00BF1700830026 /* Shaders.metal */,
 				594AE8442A00BF1700830026 /* ShaderTypes.h */,
 				59940D752A29979400D260EA /* VertexType.hpp */,
+				593B32BF2A463DCD00830DD2 /* ShaderTypes.m */,
+				593B32C12A46407200830DD2 /* CopyShader.metal */,
+				593B32C52A46C65100830DD2 /* RayTracingKernel.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -383,6 +392,7 @@
 				591989862A42A9F600CDC3D5 /* WindowController.m in Sources */,
 				59940D7A2A2D4C8400D260EA /* Cube.cpp in Sources */,
 				59940D602A21355500D260EA /* Icosphere.cpp in Sources */,
+				593B32C22A46407200830DD2 /* CopyShader.metal in Sources */,
 				59940D4F2A0C0FA200D260EA /* MainWindow.mm in Sources */,
 				5957C8A92A35177D00416BBA /* Coordinates.cpp in Sources */,
 				593D7BD32A035017009424AE /* Camera.mm in Sources */,
@@ -392,6 +402,7 @@
 				594AE84B2A00BF1800830026 /* main.m in Sources */,
 				594AE8432A00BF1700830026 /* Shaders.metal in Sources */,
 				593D7BDD2A0AC592009424AE /* Math.cpp in Sources */,
+				593B32C02A463DCD00830DD2 /* ShaderTypes.m in Sources */,
 				59940D592A19E09100D260EA /* Mesh.mm in Sources */,
 				593D7BD02A030F7A009424AE /* GameView.m in Sources */,
 				594AE83E2A00BF1700830026 /* Renderer.mm in Sources */,
@@ -402,6 +413,7 @@
 				594AE83B2A00BF1700830026 /* AppDelegate.mm in Sources */,
 				59940D532A19DDB500D260EA /* Submesh.mm in Sources */,
 				5919898C2A42AC6400CDC3D5 /* SummaryViewController.m in Sources */,
+				593B32C62A46C65100830DD2 /* RayTracingKernel.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +506,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				MTL_LANGUAGE_REVISION = Metal30;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				SDKROOT = macosx;
@@ -551,6 +564,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				MTL_LANGUAGE_REVISION = Metal30;
 				SDKROOT = macosx;
 			};
 			name = Release;

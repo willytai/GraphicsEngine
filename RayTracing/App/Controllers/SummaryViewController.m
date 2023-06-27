@@ -17,6 +17,7 @@
 @implementation SummaryViewController
 GEN_CLASS_LOGGER("SummarViewController.RayTracing.GraphicsEngine", "SummaryViewController")
 GEN_NOTIFICATION_NAME(NotificationName_SwitchSwitched)
+GEN_NOTIFICATION_NAME(NotificationName_RenderingModeChanged)
 
 - (void)viewDidLoad
 {
@@ -30,7 +31,17 @@ GEN_NOTIFICATION_NAME(NotificationName_SwitchSwitched)
 {
     LOG_INFO("Posting notification from %s", __PRETTY_FUNCTION__);
     [NSNotificationCenter.defaultCenter postNotificationName:SummaryViewController.NotificationName_SwitchSwitched
-                                                      object:nil];
+                                                      object:self];
+}
+
+- (IBAction)RenderingModeChangedAction:(NSComboBox*)sender {
+    LOG_INFO("Posting notification from %s", __PRETTY_FUNCTION__);
+    [NSNotificationCenter.defaultCenter postNotificationName:SummaryViewController.NotificationName_RenderingModeChanged
+                                                      object:self
+                                                    userInfo:@{
+                                                        NotificationUserInfoTag_StringVal: sender.stringValue
+                                                    }
+    ];
 }
 
 @end

@@ -8,6 +8,8 @@
 #ifndef Notification_h
 #define Notification_h
 
+#import <Foundation/Foundation.h>
+
 #define GEN_NOTIFICATION_NAME(name) \
 + (NSNotificationName)name \
 { \
@@ -15,5 +17,9 @@
     return name; \
 }
 
+#define GEN_NOTIFICATION_USER_INFO_TAG(tag) \
+static NSString* NotificationUserInfoTag_##tag = @"NotificationUserInfoTag_"#tag
+
+GEN_NOTIFICATION_USER_INFO_TAG(StringVal);
 
 #endif /* Notification_h */
