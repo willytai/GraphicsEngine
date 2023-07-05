@@ -14,6 +14,7 @@ typedef uint16_t TriangleIndexType;
 #ifdef TEST
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 struct TriangleTestData
 {
     struct IcosphereTestData
