@@ -13,19 +13,20 @@
 namespace mathutil {
 
 // types
-simd_float2 float2();
-simd_float3 float3();
-simd_float4 float4();
+simd_float2     float2();
+simd_float3     float3();
+simd_float4     float4();
+simd_float4x4   float4x4();
 
-simd_float2 float2(float x, float y);
-simd_float3 float3(float x, float y, float z);
-simd_float4 float4(float x, float y, float z, float w);
-simd_float4 float4(simd_float3 vec3, float w);
-simd_quatf  quat(float pitch, float yaw, float roll);
+simd_float2     float2(float x, float y);
+simd_float3     float3(float x, float y, float z);
+simd_float4     float4(float x, float y, float z, float w);
+simd_float4     float4(simd_float3 vec3, float w);
+simd_quatf      quat(float pitch, float yaw, float roll);
 
 // operations
-simd_float4x4 matmul(simd_float4x4 x, simd_float4x4 y);
-simd_float3   rotate(simd_quatf q, simd_float3 v);
+simd_float4x4   matmul(simd_float4x4 x, simd_float4x4 y);
+simd_float3     rotate(simd_quatf q, simd_float3 v);
 
 
 //

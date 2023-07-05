@@ -31,16 +31,16 @@ typedef NSInteger       EnumBackingType;
 
 typedef NS_ENUM(EnumBackingType, BufferIndex)
 {
-    BufferIndexMeshPositions  = 1,
-    BufferIndexMeshNormals    = 2,
-    BufferIndexMeshMaterialID = 3,
+    BufferIndexMeshPositions   = 1,
+    BufferIndexMeshNormals     = 2,
+    BufferIndexMeshMaterialIDs = 3,
 
     // Some helper macros.
     // This keeps track of how many vertex buffers
     // are required.
     // Make sure to update the '__BufferIndexMax' when
     // a new vertex attribute is added.
-    __BufferIndexMax = BufferIndexMeshMaterialID,
+    __BufferIndexMax = BufferIndexMeshMaterialIDs,
     BufferIndexCount = __BufferIndexMax,
     
     BufferIndexUniforms = 0,
@@ -51,7 +51,7 @@ typedef NS_ENUM(EnumBackingType, VertexAttribute)
 {
     VertexAttributePosition   = BufferIndexMeshPositions - 1,
     VertexAttributeNormal     = BufferIndexMeshNormals - 1,
-    VertexAttributeMaterialID = BufferIndexMeshMaterialID - 1,
+    VertexAttributeMaterialID = BufferIndexMeshMaterialIDs - 1,
 };
 
 typedef NS_ENUM(EnumBackingType, TextureIndex)

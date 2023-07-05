@@ -10,15 +10,19 @@
 #import "../EventCallbacks.h"
 #import "../Notification.h"
 #import "../Views/GameView.h"
+#import "../../Renderer/Asset/DataAllocator.h"
 #import "../../Renderer/Renderer.h"
+#import "../../Renderer/Scene.h"
 #import "../../Utils/Logger.h"
 
 
 @implementation GameViewController
 {
-    GameView* _view;
+    GameView*           _view;
 
-    Renderer* _renderer;
+    DataAllocator*      _dataAllocator;
+    Scene*              _scene;
+    Renderer*           _renderer;
 
     ScrollCallback      _scrollCallback;
     MouseDownCallback   _mouseDownCallback;
@@ -54,12 +58,20 @@ GEN_CLASS_LOGGER("GameViewController.RayTracing.GraphicsEngine", "GameViewContro
 
     /// Register observers
     [self _registerNotificationObservers];
+    
+    /// Initialize allocator
+    _dataAllocator = [[DataAllocator alloc] initWithDevice:_view.device];
+    
+    /// Create scene
+    _scene = [[Scene alloc] initWithBufferDataAllocator:_dataAllocator];
 
     /// Initialize renderer
-    _renderer = [[Renderer alloc] initWithMetalKitView:_view];
+    _renderer = [[Renderer alloc] initWithMetalKitView:_view Scene:_scene];
 
+    /// sync view size
     [_renderer mtkView:_view drawableSizeWillChange:_view.bounds.size];
 
+    /// set delegate
     _view.delegate = _renderer;
 }
 

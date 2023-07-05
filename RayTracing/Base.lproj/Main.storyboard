@@ -773,9 +773,6 @@
                             </comboBox>
                         </subviews>
                     </view>
-                    <connections>
-                        <outlet property="RenderingModeComboBox" destination="bpn-LK-ceA" id="1Dl-6L-zLR"/>
-                    </connections>
                 </viewController>
                 <customObject id="EMg-sD-eBL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -6,7 +6,7 @@
 //
 
 #import <MetalKit/MetalKit.h>
-#import <Foundation/Foundation.h>
+#import "Scene.h"
 #import "../App/InputCodes.h"
 
 typedef NS_ENUM(NSInteger, RendererMode)
@@ -24,7 +24,8 @@ typedef NS_ENUM(NSInteger, RendererMode)
 /// the rendering mode, currently supports ray tracing and normal rendering
 @property(nonatomic, readonly) RendererMode rendererMode;
 
-- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
+- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view
+                                       Scene:(nonnull Scene*)scene;
 
 /// mouse scrolled event, calls the camera's 'onScrolled'
 - (void)onScrolled:(float)deltaY;

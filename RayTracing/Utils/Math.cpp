@@ -6,7 +6,6 @@
 //
 
 #include "Math.hpp"
-#include "Logger.hpp"
 
 #define EPSILON 1e-6
 
@@ -25,6 +24,10 @@ simd_float3 float3() {
 
 simd_float4 float4() {
     return float4(0.0f, 0.0f, 0.0f, 0.0f);
+}
+
+simd_float4x4 float4x4() {
+    return matrix_identity_float4x4;
 }
 
 simd_float2 float2(float x, float y) {

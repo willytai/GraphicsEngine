@@ -10,12 +10,9 @@
 
 #import "Renderer.h"
 #import "Asset/Mesh.h"
-#import "Asset/BufferDataAllocator.h"
 #import "Camera.h"
-#import "Geometries/Cube.hpp"
 #import "Shader/ShaderTypes.h"
 #import "../Utils/Logger.h"
-#import "../Utils/Logger.hpp"
 #import "../Utils/Math.hpp"
 #import "../Utils/Timer.hpp"
 
@@ -43,8 +40,6 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     id<MTLBuffer> _dynamicUniformBuffer;
     id<MTLRenderPipelineState> _pipelineState;
     id<MTLDepthStencilState> _depthState;
-    // id <MTLTexture> _colorMap;
-    // MTLVertexDescriptor* _mtlVertexDescriptor;
 
     uint32_t    _uniformBufferOffset;
     uint8_t     _uniformBufferIndex;
@@ -59,9 +54,8 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
     id<MTLComputePipelineState>     _rayTracingPipelineState;
     id<MTLRenderPipelineState>      _copyPipelineState;
 
-    // float _rotation;
-
-    // MTKMesh *_mesh;
+    // asset
+    Scene*      _scene;
 
 
     /// added
@@ -71,12 +65,13 @@ static const size_t kAlignedUniformsSize = (sizeof(Uniforms) & ~0xFF) + 0x100;
 }
 GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
 
-- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
+- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view Scene:(nonnull Scene *)scene
 {
     self = [super init];
     if(self)
     {
         _device = view.device;
+        _scene = scene;
         _inFlightSemaphore = dispatch_semaphore_create(kMaxBuffersInFlight);
         [self _loadMetalWithView:view];
         [self _loadAssets];
@@ -174,7 +169,7 @@ GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
 
     _mtlVertexDescriptor.attributes[VertexAttributeMaterialID].format = MTLVertexFormatUChar;
     _mtlVertexDescriptor.attributes[VertexAttributeMaterialID].offset = 0;
-    _mtlVertexDescriptor.attributes[VertexAttributeMaterialID].bufferIndex = BufferIndexMeshMaterialID;
+    _mtlVertexDescriptor.attributes[VertexAttributeMaterialID].bufferIndex = BufferIndexMeshMaterialIDs;
 
     _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stride = sizeof(VtxPositionType);
     _mtlVertexDescriptor.layouts[BufferIndexMeshPositions].stepRate = 1;
@@ -184,9 +179,9 @@ GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
     _mtlVertexDescriptor.layouts[BufferIndexMeshNormals].stepRate = 1;
     _mtlVertexDescriptor.layouts[BufferIndexMeshNormals].stepFunction = MTLVertexStepFunctionPerVertex;
 
-    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stride = sizeof(VtxMaterialIDType);
-    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepRate = 1;
-    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stepFunction = MTLVertexStepFunctionPerVertex;
+    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialIDs].stride = sizeof(VtxMaterialIDType);
+    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialIDs].stepRate = 1;
+    _mtlVertexDescriptor.layouts[BufferIndexMeshMaterialIDs].stepFunction = MTLVertexStepFunctionPerVertex;
 
     LOG_INFO("Vertex descriptor initialized");
 }
@@ -282,62 +277,14 @@ GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
 - (void)_loadAssets
 {
 
-    BufferDataAllocator* bufferDataAllocator = [[BufferDataAllocator alloc] initWithDevice:_device];
-    _testMesh = [Mesh newCubeWithDimensionX:5.0f Y:1.0f Z:10.0f Allocator:bufferDataAllocator];
-    _testMesh = [Mesh newIcosphereWithSubdivisions:3
-                                         Allocator:bufferDataAllocator];
+    // BufferDataAllocator* bufferDataAllocator = [[BufferDataAllocator alloc] initWithDevice:_device];
+    // _testMesh = [Mesh newCubeWithDimensionX:5.0f Y:1.0f Z:10.0f Allocator:bufferDataAllocator];
+    // _testMesh = [Mesh newIcosphereWithSubdivisions:3
+    //                                      Allocator:bufferDataAllocator];
     
-    LOG_INFO("Asset loaded");
+    [_scene upload];
+    LOG_INFO("Scene %@ loaded", _scene.name);
 
-    /// Load assets into metal objects
-
-    // NSError *error;
-
-    // MTKMeshBufferAllocator *metalAllocator = [[MTKMeshBufferAllocator alloc]
-    //                                           initWithDevice: _device];
-
-    // MDLMesh *mdlMesh = [MDLMesh newEllipsoidWithRadii:mathutil::float3(3.0f, 3.0f, 3.0f)
-    //                                    radialSegments:20
-    //                                  verticalSegments:20
-    //                                      geometryType:MDLGeometryTypeTriangles
-    //                                     inwardNormals:NO
-    //                                        hemisphere:NO
-    //                                         allocator:metalAllocator];
-
-    // MDLVertexDescriptor *mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(_mtlVertexDescriptor);
-
-    // mdlVertexDescriptor.attributes[VertexAttributePosition].name  = MDLVertexAttributePosition;
-    // mdlVertexDescriptor.attributes[VertexAttributeNormal].name  = MDLVertexAttributeNormal;
-
-    // mdlMesh.vertexDescriptor = mdlVertexDescriptor;
-
-    // _mesh = [[MTKMesh alloc] initWithMesh:mdlMesh
-    //                                device:_device
-    //                                 error:&error];
-
-    // if(!_mesh || error)
-    // {
-    //     NSLog(@"Error creating MetalKit mesh %@", error.localizedDescription);
-    // }
-
-    // MTKTextureLoader* textureLoader = [[MTKTextureLoader alloc] initWithDevice:_device];
-
-    // NSDictionary *textureLoaderOptions =
-    // @{
-    //   MTKTextureLoaderOptionTextureUsage       : @(MTLTextureUsageShaderRead),
-    //   MTKTextureLoaderOptionTextureStorageMode : @(MTLStorageModePrivate)
-    //   };
-
-    // _colorMap = [textureLoader newTextureWithName:@"ColorMap"
-    //                                   scaleFactor:1.0
-    //                                        bundle:nil
-    //                                       options:textureLoaderOptions
-    //                                         error:&error];
-
-    // if(!_colorMap || error)
-    // {
-    //     NSLog(@"Error creating texture %@", error.localizedDescription);
-    // }
 }
 
 #pragma mark Per Frame Update
@@ -491,6 +438,7 @@ GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
         [renderEncoder setRenderPipelineState:_pipelineState];
         [renderEncoder setDepthStencilState:_depthState];
 
+        /// bind uniform buffer
         [renderEncoder setVertexBuffer:_dynamicUniformBuffer
                                 offset:_uniformBufferOffset
                                atIndex:BufferIndexUniforms];
@@ -499,27 +447,9 @@ GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
                                   offset:_uniformBufferOffset
                                  atIndex:BufferIndexUniforms];
 
-        for (NSUInteger bufferIndex = 0; bufferIndex < _testMesh.vertexBuffers.count; bufferIndex++)
-        {
-            MeshBuffer *vertexBuffer = _testMesh.vertexBuffers[bufferIndex];
-            if((NSNull*)vertexBuffer != [NSNull null])
-            {
-                [renderEncoder setVertexBuffer:vertexBuffer.buffer
-                                        offset:vertexBuffer.offset
-                                       atIndex:vertexBuffer.bufferIndex];
-            }
-        }
-
-        // [renderEncoder setFragmentTexture:_colorMap
-        //                           atIndex:TextureIndexColor];
-
-        for(Submesh *submesh in _testMesh.submeshes)
-        {
-            [renderEncoder drawIndexedPrimitives:submesh.primitiveType
-                                      indexCount:submesh.indexCount
-                                       indexType:submesh.indexType
-                                     indexBuffer:submesh.indexBuffer.buffer
-                               indexBufferOffset:submesh.indexBuffer.offset];
+        /// one draw call per instance
+        for (GeometryInstance* instance in _scene.instances) {
+            [self _drawMesh:instance Encoder:renderEncoder];
         }
 
         [renderEncoder popDebugGroup];
@@ -530,6 +460,29 @@ GEN_CLASS_LOGGER("Renderer.RayTracing.GraphicsEngine", "Renderer")
     }
 
     [commandBuffer commit];
+}
+
+- (void)_drawMesh:(GeometryInstance*)instance Encoder:(id<MTLRenderCommandEncoder>)renderEncoder
+{
+    GeometryResource resource = instance.geometry.resource;
+    id<Geometry>     geometry = instance.geometry;
+
+    // TODO should do something with the transfrom
+    // simd_float4x4 transfrom = instance.transform;
+    
+    // bind resources
+    for (MeshBuffer* vertexBuffer in resource.vertexBuffers) {
+        [renderEncoder setVertexBuffer:vertexBuffer.buffer
+                                offset:vertexBuffer.offset
+                               atIndex:vertexBuffer.bufferIndex];
+    }
+    
+    // draw mesh
+    [renderEncoder drawIndexedPrimitives:geometry.primitiveType
+                              indexCount:geometry.indexCount
+                               indexType:geometry.indexType
+                             indexBuffer:resource.indexBuffer.buffer
+                       indexBufferOffset:resource.indexBuffer.offset];
 }
 
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size

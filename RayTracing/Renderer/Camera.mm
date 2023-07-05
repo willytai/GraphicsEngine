@@ -10,7 +10,6 @@
 #import "Geometries/Coordinates.hpp"
 #import "../App/InputCodes.h"
 #import "../Utils/Logger.h"
-#import "../Utils/Logger.hpp"
 #import "../Utils/Math.hpp"
 
 

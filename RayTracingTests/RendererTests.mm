@@ -44,10 +44,10 @@
                    sizeof(VtxNormalType),
                    self.renderer.mtlVertexDescriptor.layouts[BufferIndexMeshNormals].stride);
 
-    XCTAssertEqual(self.renderer.mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stride,  sizeof(VtxMaterialIDType),
+    XCTAssertEqual(self.renderer.mtlVertexDescriptor.layouts[BufferIndexMeshMaterialIDs].stride,  sizeof(VtxMaterialIDType),
                    @"Vertex materialID layout doesn't match. Expected stride to be %lu, got %lu.",
                    sizeof(VtxMaterialIDType),
-                   self.renderer.mtlVertexDescriptor.layouts[BufferIndexMeshMaterialID].stride);
+                   self.renderer.mtlVertexDescriptor.layouts[BufferIndexMeshMaterialIDs].stride);
 }
 
 @end

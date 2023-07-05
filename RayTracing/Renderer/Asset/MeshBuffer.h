@@ -40,6 +40,11 @@ NS_ASSUME_NONNULL_BEGIN
                        Options:(MTLResourceOptions)options
                          Label:(NSString*)label;
 
+/// a wrapper for a given MTLBuffer
+- (nonnull instancetype)initWithMTLBuffer:(id<MTLBuffer>)buffer
+                                   Offset:(NSUInteger)offset
+                              BufferIndex:(BufferIndex)bufferIndex;
+
 /// populate buffer with data
 - (void)addData:(const void*)data
            Size:(NSUInteger)size;

@@ -6,7 +6,6 @@
 //
 
 #import "MeshBuffer.h"
-#import "../../Utils/Logger.hpp"
 
 @implementation MeshBuffer
 
@@ -42,6 +41,18 @@
         _offset = 0;
         _bufferIndex = (NSUInteger)bufferIndex;
         _buffer.label = label;
+    }
+    return self;
+}
+
+- (nonnull instancetype)initWithMTLBuffer:(nonnull id<MTLBuffer>)buffer
+                                   Offset:(NSUInteger)offset
+                              BufferIndex:(BufferIndex)bufferIndex
+{
+    if (self = [super init]) {
+        _buffer = buffer;
+        _offset = offset;
+        _bufferIndex = bufferIndex;
     }
     return self;
 }
